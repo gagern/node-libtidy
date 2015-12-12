@@ -1,0 +1,50 @@
+{
+  "name": "libtidy",
+  "version": "0.1.0",
+  "description": "Node bindings to the HTML Tidy library",
+  "main": "index.js",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagern/node-libtidy.git"
+  },
+  "keywords": [
+    "htmltidy",
+    "libtidy",
+    "tidylib",
+    "html",
+    "tidy",
+    "html5",
+    "beautify",
+    "format",
+    "indent"
+  ],
+  "author": "Martin von Gagern <Martin.vGagern@gmx.net>",
+  "license": "MIT",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/gagern/node-libtidy/issues"
+  },
+  "homepage": "https://github.com/gagern/node-libtidy#readme",
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "nan": "^2.1.0",
+    "node-gyp": "^3.2.1"
+  },
+  "dependencies": {
+    "bindings": "^1.2.1"
+  },
+  "files": [
+    "src/",
+    "./*.js",
+    "bindings.gyp",
+    "tidy-html5/version.txt",
+    "tidy-html5/README.md",
+    "tidy-html5/README/",
+    "tidy-html5/src/",
+    "tidy-html5/include/"
+  ]
+}
