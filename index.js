@@ -10,7 +10,7 @@ TidyDoc.prototype.parseBuffer = function(buf, cb) {
 TidyDoc.prototype.cleanAndRepair = function(cb) {
     this._async(null, true, false, false, cb);
 };
-TidyDoc.prototype.runDiagnstics = function(cb) {
+TidyDoc.prototype.runDiagnostics = function(cb) {
     this._async(null, false, true, false, cb);
 };
 TidyDoc.prototype.saveBuffer = function(cb) {

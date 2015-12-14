@@ -23,11 +23,13 @@ namespace node_libtidy {
     static NAN_METHOD(New);
     static NAN_METHOD(parseBufferSync);
     static NAN_METHOD(cleanAndRepairSync);
+    static NAN_METHOD(runDiagnosticsSync);
     static NAN_METHOD(saveBufferSync);
     static NAN_METHOD(getOptionList);
     static NAN_METHOD(optGetValue);
     static NAN_METHOD(optSetValue);
     static NAN_METHOD(async);
+    static NAN_METHOD(getErrorLog);
 
     static Nan::Persistent<v8::Function> constructor;
 

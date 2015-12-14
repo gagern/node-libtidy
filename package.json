@@ -30,6 +30,8 @@
   },
   "homepage": "https://github.com/gagern/node-libtidy#readme",
   "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-subset": "^1.2.0",
     "mocha": "^2.3.4",
     "nan": "^2.1.0",
     "node-gyp": "^3.2.1"

@@ -13,11 +13,13 @@ namespace node_libtidy {
 
     Nan::SetPrototypeMethod(tpl, "parseBufferSync", parseBufferSync);
     Nan::SetPrototypeMethod(tpl, "cleanAndRepairSync", cleanAndRepairSync);
+    Nan::SetPrototypeMethod(tpl, "runDiagnosticsSync", runDiagnosticsSync);
     Nan::SetPrototypeMethod(tpl, "saveBufferSync", saveBufferSync);
     Nan::SetPrototypeMethod(tpl, "getOptionList", getOptionList);
     Nan::SetPrototypeMethod(tpl, "optGetValue", optGetValue);
     Nan::SetPrototypeMethod(tpl, "optSetValue", optSetValue);
     Nan::SetPrototypeMethod(tpl, "_async", async);
+    Nan::SetPrototypeMethod(tpl, "getErrorLog", getErrorLog);
 
     constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
     Nan::Set(target, Nan::New("TidyDoc").ToLocalChecked(),
@@ -90,13 +92,22 @@ namespace node_libtidy {
                   node::Buffer::Length(info[0]));
     int rc = tidyParseBuffer(doc->doc, &inbuf);
     tidyBufDetach(&inbuf);
-    doc->CheckResult(rc, "tidyParseBuffer");
+    if (doc->CheckResult(rc, "tidyParseBuffer"))
+      info.GetReturnValue().Set(doc->err.string().ToLocalChecked());
   }
 
   NAN_METHOD(Doc::cleanAndRepairSync) {
     Doc* doc = Prelude(info.Holder()); if (!doc) return;
     int rc = tidyCleanAndRepair(doc->doc);
-    doc->CheckResult(rc, "tidyCleanAndRepair");
+    if (doc->CheckResult(rc, "tidyCleanAndRepair"))
+      info.GetReturnValue().Set(doc->err.string().ToLocalChecked());
+  }
+
+  NAN_METHOD(Doc::runDiagnosticsSync) {
+    Doc* doc = Prelude(info.Holder()); if (!doc) return;
+    int rc = tidyRunDiagnostics(doc->doc);
+    if (doc->CheckResult(rc, "runDiagnosticsSync"))
+      info.GetReturnValue().Set(doc->err.string().ToLocalChecked());
   }
 
   NAN_METHOD(Doc::saveBufferSync) {
@@ -128,6 +139,14 @@ namespace node_libtidy {
     }
     Nan::Utf8String str(value);
     opt = tidyGetOptionByName(doc, *str);
+    if (!opt) {
+      std::ostringstream buf;
+      buf << "Option '" << *str << "' unknown";
+      std::string str = buf.str();
+      v8::Local<v8::String> msg = Nan::New<v8::String>
+        (str.c_str(), str.length()).ToLocalChecked();
+      Nan::ThrowError(msg);
+    }
     return opt;
   }
 
@@ -209,6 +228,15 @@ namespace node_libtidy {
     w->shouldRunDiagnostics = Nan::To<bool>(info[2]).FromJust();
     w->shouldSaveToBuffer = Nan::To<bool>(info[3]).FromJust();
     Nan::AsyncQueueWorker(w);
+  }
+
+  NAN_METHOD(Doc::getErrorLog) {
+    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.Holder());
+    if (doc->locked) {
+      Nan::ThrowError("TidyDoc is locked for asynchroneous use.");
+      return;
+    }
+    info.GetReturnValue().Set(doc->err.string().ToLocalChecked());
   }
 
 }
