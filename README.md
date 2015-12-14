@@ -12,13 +12,18 @@ so you don't have to have the HTML Tidy package installed on your system.
 * [tidy-html5](https://www.npmjs.com/package/tidy-html5)
   has libtidy compiles to JavaScript using emscripten.
   It is likely more portable, but at the cost of performance.
+  Only supports synchroneous operation.
 * [tidy](https://www.npmjs.com/package/tidy)
   and [tidy2](https://www.npmjs.com/package/tidy2)
   also provide bindings for libtidy,
   but they expect the library and its header files
   to be installed on the system.
+  Only supports synchroneous operation.
 * [htmltidy](https://www.npmjs.com/package/htmltidy)
   and [htmltidy2](https://www.npmjs.com/package/htmltidy2)
   use the command line tool to tidy up html,
-  so the tool has to be installed and
-  they incur some process creation overhead.
+  so they incur some process creation overhead.
+  The binaries for the most common platforms are shipped with the package,
+  but other platforms are not supported.
+  This approach requires no build tools, though.
+  Only supports asynchroneous operation.
