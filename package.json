@@ -42,8 +42,9 @@
   },
   "files": [
     "src/",
-    "./*.js",
-    "bindings.gyp",
+    "test/",
+    "/*.js",
+    "binding.gyp",
     "tidy-html5/version.txt",
     "tidy-html5/README.md",
     "tidy-html5/README/",
