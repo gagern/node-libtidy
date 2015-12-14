@@ -1,6 +1,5 @@
 #include "node-libtidy.hh"
 
-#include <malloc.h>
 #include <cstdlib>
 #include <cstdio>
 

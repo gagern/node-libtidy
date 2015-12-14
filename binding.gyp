@@ -7,6 +7,7 @@
                 'src/memory.cc',
                 'src/opt.cc',
                 'src/doc.cc',
+                'src/worker.cc',
                 'tidy-html5/src/access.c',
                 'tidy-html5/src/attrs.c',
                 'tidy-html5/src/istack.c',

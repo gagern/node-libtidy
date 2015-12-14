@@ -1,4 +1,7 @@
+#include <iostream>
+
 #include <nan.h>
+
 extern "C" {
 #include <tidy.h>
 #include <tidybuffio.h>
@@ -9,3 +12,4 @@ extern "C" {
 #include "buf.hh"
 #include "opt.hh"
 #include "doc.hh"
+#include "worker.hh"

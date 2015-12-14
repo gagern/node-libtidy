@@ -1,3 +1,4 @@
+
 namespace node_libtidy {
 
   class Buf {
@@ -14,7 +15,11 @@ namespace node_libtidy {
       return &buf;
     }
 
-    void empty() {
+    bool isEmpty() {
+      return buf.size == 0;
+    }
+
+    void reset() {
       buf.next = buf.size = 0;
     }
 
@@ -34,6 +39,12 @@ namespace node_libtidy {
       return b2c(buf.bp);
     }
 
+    friend std::ostream& operator<<(std::ostream& out, Buf& buf);
+
   };
-  
+
+  inline std::ostream& operator<<(std::ostream& out, Buf& buf) {
+    return out.write(buf.data(), buf.buf.size);
+  }
+
 }

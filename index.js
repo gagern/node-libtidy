@@ -4,6 +4,18 @@ var lib = require("bindings")("tidy");
 for (var key in lib)
     module.exports[key] = lib[key];
 var TidyDoc = lib.TidyDoc;
+TidyDoc.prototype.parseBuffer = function(buf, cb) {
+    this._async(buf, false, false, false, cb);
+};
+TidyDoc.prototype.cleanAndRepair = function(cb) {
+    this._async(null, true, false, false, cb);
+};
+TidyDoc.prototype.runDiagnstics = function(cb) {
+    this._async(null, false, true, false, cb);
+};
+TidyDoc.prototype.saveBuffer = function(cb) {
+    this._async(null, false, false, true, cb);
+};
 Object.defineProperties(TidyDoc.prototype, {
 
   options: {
