@@ -16,6 +16,7 @@ namespace node_libtidy {
     Nan::SetPrototypeMethod(tpl, "runDiagnosticsSync", runDiagnosticsSync);
     Nan::SetPrototypeMethod(tpl, "saveBufferSync", saveBufferSync);
     Nan::SetPrototypeMethod(tpl, "getOptionList", getOptionList);
+    Nan::SetPrototypeMethod(tpl, "getOption", getOption);
     Nan::SetPrototypeMethod(tpl, "optGetValue", optGetValue);
     Nan::SetPrototypeMethod(tpl, "optSetValue", optSetValue);
     Nan::SetPrototypeMethod(tpl, "_async", async);
@@ -130,24 +131,55 @@ namespace node_libtidy {
     info.GetReturnValue().Set(arr);
   }
 
-  TidyOption Doc::asOption(v8::Local<v8::Value> value) {
+  TidyOption Doc::asOption(v8::Local<v8::Value> key) {
     TidyOption opt = NULL;
     {
       Nan::TryCatch tryCatch;
-      opt = Opt::Unwrap(value);
+      opt = Opt::Unwrap(key);
       if (opt || !tryCatch.CanContinue()) return opt;
     }
-    Nan::Utf8String str(value);
-    opt = tidyGetOptionByName(doc, *str);
+    if (key->IsNumber()) {
+      double dnum = Nan::To<double>(key).FromJust();
+      int inum = dnum;
+      if (dnum != inum) {
+        Nan::ThrowTypeError("Option id must be an integer");
+      } else if (inum <= 0 || inum > N_TIDY_OPTIONS) {
+        Nan::ThrowRangeError("Option id outside range of allowed options");
+      } else {
+        opt = tidyGetOption(doc, TidyOptionId(inum));
+        if (!opt) {
+          Nan::ThrowError("No option with this id");
+        }
+      }
+      return opt;
+    }
+    Nan::Utf8String str1(key);
+    std::string str2(*str1, str1.length());
+    for (std::string::size_type i = str2.length() - 1; i > 0; --i) {
+      if (str2[i] == '_') str2[i] = '-';
+      if (str2[i] >= 'A' && str2[i] <= 'Z' &&
+          str2[i - 1] >= 'a' && str2[i - 1] <= 'z') {
+        str2[i] = str2[i] + ('a' - 'A');
+        str2.insert(i, 1, '-');
+      }
+    }
+    opt = tidyGetOptionByName(doc, str2.c_str());
     if (!opt) {
       std::ostringstream buf;
-      buf << "Option '" << *str << "' unknown";
-      std::string str = buf.str();
+      buf << "Option '" << str2 << "' unknown";
+      std::string str3 = buf.str();
       v8::Local<v8::String> msg = Nan::New<v8::String>
-        (str.c_str(), str.length()).ToLocalChecked();
+        (str3.c_str(), str3.length()).ToLocalChecked();
       Nan::ThrowError(msg);
     }
     return opt;
+  }
+
+  NAN_METHOD(Doc::getOption) {
+    Doc* doc = Prelude(info.Holder()); if (!doc) return;
+    TidyOption opt = doc->asOption(info[0]);
+    if (!opt) return;
+    info.GetReturnValue().Set(Opt::Create(opt));
   }
 
   NAN_METHOD(Doc::optGetValue) {
@@ -179,7 +211,7 @@ namespace node_libtidy {
     TidyOption opt = doc->asOption(info[0]);
     if (!opt) return;
     TidyOptionId id = tidyOptGetId(opt);
-    int rc;
+    Bool rc;
     const char* fn;
     switch (tidyOptGetType(opt)) {
     case TidyBoolean:
@@ -191,11 +223,16 @@ namespace node_libtidy {
       fn = "tidyOptSetInt";
       break;
     default:
-      Nan::Utf8String str(info[1]);
-      rc = tidyOptSetValue(doc->doc, id, *str);
+      if (info[1]->IsNull() || info[1]->IsUndefined()) {
+        rc = tidyOptSetValue(doc->doc, id, "");
+      } else {
+        Nan::Utf8String str(info[1]);
+        rc = tidyOptSetValue(doc->doc, id, *str);
+      }
       fn = "tidyOptSetValue";
     }
-    doc->CheckResult(rc, fn);
+    if (rc != yes)
+      Nan::ThrowError("Failed to set option value");
   }
 
   // arguments:
