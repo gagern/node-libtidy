@@ -1,8 +1,8 @@
 # libtidy
 
 This package provides bindings to
-[libtidy](http://www.html-tidy.org/developer/) a.k.a.
-[TidyLib](http://api.html-tidy.org/tidy/tidylib_api_5.1.25/tidylib.html)
+[libtidy](http://www.html-tidy.org/developer/)
+a.k.a. [TidyLib][tidylib]
 which can be used to parse and tidy up HTML 5.
 The library is built as a native node extension,
 so you don't have to have the HTML Tidy package installed on your system.
@@ -10,7 +10,8 @@ so you don't have to have the HTML Tidy package installed on your system.
 ## Alternatives
 
 * [tidy-html5](https://www.npmjs.com/package/tidy-html5)
-  has libtidy compiles to JavaScript using emscripten.
+  has libtidy compiled to JavaScript using
+  [emscripten](http://emscripten.org/).
   It is likely more portable, but at the cost of performance.
   Only supports synchroneous operation.
 * [tidy](https://www.npmjs.com/package/tidy)
@@ -81,16 +82,13 @@ each of them.
 
 The basic workflow consists of these four steps executed on such an object:
 
-1. `parseBuffer`
-2. `cleanAndRepair`
-3. `runDiagnostics`
-4. `saveBuffer`
+Step | C API | Synchroneous JavaScript | Asynchroneous JavaScript
+--- | --- | --- | ---
+1. | [`tidyParseBuffer(doc,&buf)`][tidyParseBuffer] | `doc.parseBufferSync(buf)` | `doc.parseBuffer(buf,cb)`
+2. | [`tidyCleanAndRepair(doc)`][tidyCleanAndRepair] | `doc.cleanAndRepairSync()` | `doc.cleanAndRepair(cb)`
+3. | [`tidyRunDiagnostics(doc)`][tidyRunDiagnostics] | `doc.runDiagnosticsSync()` | `doc.runDiagnostics(cb)`
+4. | [`tidySaveBuffer(doc,&buf)`][tidySaveBuffer] | `doc.saveBufferSync()` | `doc.saveBuffer(cb)`
 
-In the C library, these are functions prefixed by `tidy`,
-i.e. `tidyParseBuffer` and so on.
-In the JavaScript bindings, these methods come in two flavors:
-synchroneous and asynchroneous.
-The synchroneous version has a `Sync` suffix to its name.
 Most synchroneous functions take no argument
 and return any diagnostic messages generated in the process.
 The first of the methods takes a buffer as an argument,
@@ -101,7 +99,7 @@ following the [convention described above](#callback-convention).
 ### Options
 
 For the list of available options, please refer to the
-[Quick Reference](http://api.html-tidy.org/tidy/tidylib_api_5.1.25/quick_ref.html).
+[Quick Reference][quick_ref].
 
 There are various ways to operate on options.
 Each time an option is identified, the library offers several choices:
@@ -147,4 +145,14 @@ doc.options = {
 
 The project itself uses [the MIT license](LICENSE.md).
 For the license of the underlying library, please see
-[its license file](https://github.com/htacg/tidy-html5/blob/5.1.25/README/LICENSE.md)
+[its license file][upstream-license]
+
+
+
+[tidylib]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/tidylib.html
+[tidyParseBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/group__Parse.html#gaa28ce34c95750f150205843885317851
+[tidyCleanAndRepair]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/group__Clean.html#ga11fd23eeb4acfaa0f9501effa0c21269
+[tidyRunDiagnostics]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/group__Clean.html#ga6170500974cc02114f6e4a29d44b7d77
+[tidySaveBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/group__Save.html#ga7e8642262c8c4d34cf7cc426647d29f0
+[quick_ref]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/quick_ref.html
+[upstream-license]: https://github.com/htacg/tidy-html5/blob/5.1.25/README/LICENSE.md
