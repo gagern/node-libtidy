@@ -32,4 +32,19 @@ namespace node_libtidy {
     return b != no;
   }
 
+  inline std::ostream& operator<<(std::ostream& out,
+                                  const Nan::Utf8String& str) {
+    return out.write(*str, str.length());
+  }
+
+  inline v8::Local<v8::String> NewString(const std::string& str) {
+    return Nan::New<v8::String>(str.c_str(), str.length()).ToLocalChecked();
+  }
+
+  inline std::string trim(std::string str) {
+    while (str.length() && str[str.length() - 1] == '\n')
+      str.resize(str.length() - 1);
+    return str;
+  }
+
 }

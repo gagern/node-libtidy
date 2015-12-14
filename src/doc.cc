@@ -69,12 +69,7 @@ namespace node_libtidy {
       buf << functionName << " returned " << rc;
       if (!err.isEmpty())
         buf << " - " << err;
-      std::string str = buf.str();
-      while (str.length() && str[str.length() - 1] == '\n')
-        str.resize(str.length() - 1);
-      v8::Local<v8::String> msg = Nan::New<v8::String>
-        (str.c_str(), str.length()).ToLocalChecked();
-      Nan::ThrowError(msg);
+      Nan::ThrowError(NewString(trim(buf.str())));
       err.reset();
       return false;
     }
@@ -167,10 +162,7 @@ namespace node_libtidy {
     if (!opt) {
       std::ostringstream buf;
       buf << "Option '" << str2 << "' unknown";
-      std::string str3 = buf.str();
-      v8::Local<v8::String> msg = Nan::New<v8::String>
-        (str3.c_str(), str3.length()).ToLocalChecked();
-      Nan::ThrowError(msg);
+      Nan::ThrowError(NewString(buf.str()));
     }
     return opt;
   }
@@ -212,15 +204,12 @@ namespace node_libtidy {
     if (!opt) return;
     TidyOptionId id = tidyOptGetId(opt);
     Bool rc;
-    const char* fn;
     switch (tidyOptGetType(opt)) {
     case TidyBoolean:
       rc = tidyOptSetBool(doc->doc, id, bb(Nan::To<bool>(info[1]).FromJust()));
-      fn = "tidyOptSetBool";
       break;
     case TidyInteger:
       rc = tidyOptSetInt(doc->doc, id, Nan::To<double>(info[1]).FromJust());
-      fn = "tidyOptSetInt";
       break;
     default:
       if (info[1]->IsNull() || info[1]->IsUndefined()) {
@@ -229,10 +218,16 @@ namespace node_libtidy {
         Nan::Utf8String str(info[1]);
         rc = tidyOptSetValue(doc->doc, id, *str);
       }
-      fn = "tidyOptSetValue";
     }
-    if (rc != yes)
-      Nan::ThrowError("Failed to set option value");
+    if (rc != yes) {
+      std::ostringstream buf;
+      buf << "Failed to set option '" << tidyOptGetName(opt)
+          << "' to value '" << Nan::Utf8String(info[1]) << "'";
+      if (!doc->err.isEmpty()) {
+        buf << " - " << doc->err;
+      }
+      Nan::ThrowError(NewString(trim(buf.str())));
+    }
   }
 
   // arguments:

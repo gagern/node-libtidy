@@ -190,6 +190,18 @@ describe("TidyOption:", function() {
       expect(doc.optGetValue("alt-text")).to.be.equal("foo");
     });
 
+    it("can be assigned to for configuration", function() {
+      var doc = TidyDoc();
+      expect(doc.optGetValue("alt-text")).to.be.null;
+      expect(doc.optGetValue("tab-size")).to.be.equal(8);
+      doc.options = {
+        alt_text: "foo",
+        tabSize: 3
+      };
+      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
+      expect(doc.optGetValue("tab-size")).to.be.equal(3);
+    });
+
   });
 
 });

@@ -1,21 +1,27 @@
 "use strict";
 
-var lib = require("bindings")("tidy");
-for (var key in lib)
-    module.exports[key] = lib[key];
+var lib = require("./lib");
 var TidyDoc = lib.TidyDoc;
+module.exports = TidyDoc;
+
+// Augment native code by some JavaScript-written convenience methods
+
 TidyDoc.prototype.parseBuffer = function(buf, cb) {
     this._async(buf, false, false, false, cb);
 };
+
 TidyDoc.prototype.cleanAndRepair = function(cb) {
     this._async(null, true, false, false, cb);
 };
+
 TidyDoc.prototype.runDiagnostics = function(cb) {
     this._async(null, false, true, false, cb);
 };
+
 TidyDoc.prototype.saveBuffer = function(cb) {
     this._async(null, false, false, true, cb);
 };
+
 Object.defineProperties(TidyDoc.prototype, {
 
   options: {
@@ -42,7 +48,11 @@ Object.defineProperties(TidyDoc.prototype, {
       var obj = {};
       Object.defineProperties(obj, props);
       return obj;
-    }
+    },
+    set: function(opts) {
+      for (var key in opts)
+        this.optSetValue(key, opts[key]);
+    },
   },
 
 });

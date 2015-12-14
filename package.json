@@ -2,7 +2,7 @@
   "name": "libtidy",
   "version": "0.1.0",
   "description": "Node bindings to the HTML Tidy library",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "install": "node-gyp rebuild",
     "test": "mocha"
@@ -32,6 +32,7 @@
   "devDependencies": {
     "chai": "^3.4.1",
     "chai-subset": "^1.2.0",
+    "htmltidy2": "^0.1.4",
     "mocha": "^2.3.4",
     "nan": "^2.1.0",
     "node-gyp": "^3.2.1"
