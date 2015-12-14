@@ -10,6 +10,9 @@ namespace node_libtidy {
     tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
     Nan::SetPrototypeMethod(tpl, "parseBufferSync", parseBufferSync);
+    Nan::SetPrototypeMethod(tpl, "cleanAndRepairSync", cleanAndRepairSync);
+    Nan::SetPrototypeMethod(tpl, "saveBufferSync", saveBufferSync);
+    Nan::SetPrototypeMethod(tpl, "getOptionList", getOptionList);
 
     constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
     Nan::Set(target, Nan::New("TidyDoc").ToLocalChecked(),
@@ -18,6 +21,7 @@ namespace node_libtidy {
 
   Doc::Doc() {
     doc = tidyCreateWithAllocator(&allocator);
+    tidySetErrorBuffer(doc, err); // TODO: handle return value
   }
 
   Doc::~Doc() {
@@ -38,15 +42,51 @@ namespace node_libtidy {
   }
 
   NAN_METHOD(Doc::parseBufferSync) {
-    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.This());
+    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.Holder());
     if (!node::Buffer::HasInstance(info[0])) {
+      Nan::ThrowTypeError("Argument to parseBufferSync must be a buffer");
       return;
     }
-    TidyBuffer buf = {0};
-    tidyBufAttach(&buf, reinterpret_cast<byte*>(node::Buffer::Data(info[0])),
+    TidyBuffer inbuf = {0};
+    tidyBufInitWithAllocator(&inbuf, &allocator);
+    tidyBufAttach(&inbuf, reinterpret_cast<byte*>(node::Buffer::Data(info[0])),
                   node::Buffer::Length(info[0]));
-    tidyParseBuffer(doc->doc, &buf);
-    tidyBufDetach(&buf);
+    int rc = tidyParseBuffer(doc->doc, &inbuf);
+    tidyBufDetach(&inbuf);
+    if (rc < 0)
+      Nan::ThrowError(Nan::ErrnoException(-rc, NULL,
+                                          "Error running tidyParseBuffer"));
+  }
+
+  NAN_METHOD(Doc::cleanAndRepairSync) {
+    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.Holder());
+    int rc = tidyCleanAndRepair(doc->doc);
+    if (rc < 0)
+      Nan::ThrowError(Nan::ErrnoException(-rc, NULL,
+                                          "Error running tidyCleanAndRepair"));
+  }
+
+  NAN_METHOD(Doc::saveBufferSync) {
+    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.Holder());
+    Buf out;
+    int rc = tidySaveBuffer(doc->doc, out);
+    if (rc < 0)
+      Nan::ThrowError(Nan::ErrnoException(-rc, NULL,
+                                          "Error running tidySaveBuffer"));
+    else
+      info.GetReturnValue().Set(out.buffer().ToLocalChecked());
+  }
+
+  NAN_METHOD(Doc::getOptionList) {
+    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.Holder());
+    v8::Local<v8::Array> arr = Nan::New<v8::Array>();
+    TidyIterator iter = tidyGetOptionList(doc->doc);
+    while (iter) {
+      TidyOption opt = tidyGetNextOption(doc->doc, &iter);
+      v8::Local<v8::Object> obj = Opt::Create(opt);
+      Nan::Set(arr, arr->Length(), obj);
+    }
+    info.GetReturnValue().Set(arr);
   }
 
 }

@@ -5,6 +5,7 @@
             'sources': [
                 'src/node-libtidy.cc',
                 'src/memory.cc',
+                'src/opt.cc',
                 'src/doc.cc',
                 'tidy-html5/src/access.c',
                 'tidy-html5/src/attrs.c',

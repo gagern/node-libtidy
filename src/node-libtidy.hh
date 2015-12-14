@@ -4,5 +4,8 @@ extern "C" {
 #include <tidybuffio.h>
 }
 
+#include "util.hh"
 #include "memory.hh"
+#include "buf.hh"
+#include "opt.hh"
 #include "doc.hh"
