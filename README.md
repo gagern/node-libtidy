@@ -145,6 +145,6 @@ doc.options = {
 
 ## License
 
-The project itself uses the MIT license.
+The project itself uses [the MIT license](LICENSE.md).
 For the license of the underlying library, please see
 [its license file](https://github.com/htacg/tidy-html5/blob/5.1.25/README/LICENSE.md)
