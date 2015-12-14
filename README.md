@@ -41,10 +41,34 @@ C functions.
 On the other hand, the project offers high-level functions to easily
 deal with common workflows.
 
+### Callback convention
+
+Most asynchroneous operations in this library take a callback with the
+conventional node signature `cb(err, res)`.
+In the case of a serious error, `err` will contain an exception
+providing details about the problem.
+In less severe situations, `err` will be `null`
+and `res` will be an object containing several properties:
+
+* **`errlog`** contains the error messages generated during the run,
+  formatted as a string including a trailing newline.
+* **`output`** contains the output buffer if output was generated.
+  The property is unset if generating output was not part of the
+  method in question, or `null` if no output was generated due to errors.
+
+Other useful properties may be added in the future.
+
 ### High-level
 
-Currently no high-level functions have been officially defined yet,
-except for the drop-in replacements mentioned above.
+High-level functions automate the most common workflows.
+
+#### tidyBuffer(document, [options,] callback)
+
+The `document` is assumed to be a buffer or a string.
+Anything else will be converted to a string and then turned into a buffer.
+`options` is an optional dictionary of options,
+see [the section on options](#options) for details.
+`callback` follows the [convention described above](#callback-convention).
 
 ### Basic workflow
 
@@ -71,19 +95,8 @@ Most synchroneous functions take no argument
 and return any diagnostic messages generated in the process.
 The first of the methods takes a buffer as an argument,
 and the last returns the resulting output buffer.
-
-The asynchroneous methods take a callback function as last argument.
-It has signature `cb(err, res)`.
-In the case of a serious error, `err` will contain an exception
-providing details about the problem.
-In less severe situations, `err` will be `null`
-and `res` will be an object containing several properties:
-
-* **`errlog`** contains the error messages generated during the run,
-  formatted as a string including a trailing newline.
-* **`output`** contains the output buffer in the case of `saveBuffer`.
-
-Other useful properties may be added in the future.
+The asynchroneous methods take a callback function as last argument,
+following the [convention described above](#callback-convention).
 
 ### Options
 

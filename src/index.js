@@ -6,9 +6,21 @@ var lib = require("./lib");
 for (key in lib)
   module.exports[key] = lib[key];
 
-// Will augment TidyDoc, no need to assign result
-require("./TidyDoc");
+var TidyDoc = require("./TidyDoc");
 
 var htmltidy = require("./htmltidy");
 for (key in htmltidy)
   module.exports[key] = htmltidy[key];
+
+module.exports.tidyBuffer = function(buf, opts, cb) {
+  if (typeof cb === "undefined" && typeof opts === "function") {
+    cb = opts;
+    opts = {};
+  }
+  opts = opts || {};
+  var doc = TidyDoc();
+  doc.options = opts;
+  if (!Buffer.isBuffer(buf))
+    text = Buffer(String(buf));
+  doc.tidyBuffer(buf, cb);
+};

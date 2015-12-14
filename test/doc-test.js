@@ -3,7 +3,6 @@
 var chai = require("chai");
 chai.use(require("chai-subset"));
 var expect = chai.expect;
-var util = require("util");
 var libtidy = require("../");
 var TidyDoc = libtidy.TidyDoc;
 
@@ -198,6 +197,21 @@ describe("TidyDoc:", function() {
           output: null,
         });
         expect(doc.getErrorLog()).equal("");
+        done();
+      });
+    });
+
+    it("all in one go", function() {
+      var doc = new TidyDoc();
+      doc.tidyBuffer(testDoc1, function(err, res) {
+        expect(err).to.be.null;
+        expect(res).to.contain.key("output");
+        expect(res).to.contain.key("errlog");
+        expect(res.errlog).to.match(/inserting missing/);
+        expect(res.errlog).to.match(/looks like HTML5/);
+        expect(res.errlog).to.match(/were found/);
+        expect(Buffer.isBuffer(res.output)).ok;
+        expect(res.output.toString()).to.match(/<title>.*<\/title>/);
         done();
       });
     });

@@ -22,6 +22,10 @@ TidyDoc.prototype.saveBuffer = function(cb) {
     this._async(null, false, false, true, cb);
 };
 
+TidyDoc.prototype.tidyBuffer = function(buf, cb) {
+  this._async(buf, true, true, true, cb);
+};
+
 Object.defineProperties(TidyDoc.prototype, {
 
   options: {
