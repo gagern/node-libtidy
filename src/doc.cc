@@ -13,6 +13,8 @@ namespace node_libtidy {
     Nan::SetPrototypeMethod(tpl, "cleanAndRepairSync", cleanAndRepairSync);
     Nan::SetPrototypeMethod(tpl, "saveBufferSync", saveBufferSync);
     Nan::SetPrototypeMethod(tpl, "getOptionList", getOptionList);
+    Nan::SetPrototypeMethod(tpl, "optGetValue", optGetValue);
+    Nan::SetPrototypeMethod(tpl, "optSetValue", optSetValue);
 
     constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
     Nan::Set(target, Nan::New("TidyDoc").ToLocalChecked(),
@@ -49,7 +51,7 @@ namespace node_libtidy {
     }
     TidyBuffer inbuf = {0};
     tidyBufInitWithAllocator(&inbuf, &allocator);
-    tidyBufAttach(&inbuf, reinterpret_cast<byte*>(node::Buffer::Data(info[0])),
+    tidyBufAttach(&inbuf, c2b(node::Buffer::Data(info[0])),
                   node::Buffer::Length(info[0]));
     int rc = tidyParseBuffer(doc->doc, &inbuf);
     tidyBufDetach(&inbuf);
@@ -87,6 +89,60 @@ namespace node_libtidy {
       Nan::Set(arr, arr->Length(), obj);
     }
     info.GetReturnValue().Set(arr);
+  }
+
+  TidyOption Doc::asOption(v8::Local<v8::Value> value) {
+    TidyOption opt = NULL;
+    {
+      Nan::TryCatch tryCatch;
+      opt = Opt::Unwrap(value);
+      if (opt || !tryCatch.CanContinue()) return opt;
+    }
+    Nan::Utf8String str(value);
+    opt = tidyGetOptionByName(doc, *str);
+    return opt;
+  }
+
+  NAN_METHOD(Doc::optGetValue) {
+    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.Holder());
+    TidyOption opt = doc->asOption(info[0]);
+    if (!opt) return;
+    TidyOptionId id = tidyOptGetId(opt);
+    switch (tidyOptGetType(opt)) {
+    case TidyBoolean:
+      info.GetReturnValue().Set(Nan::New<v8::Boolean>
+                                (bb(tidyOptGetBool(doc->doc, id))));
+      break;
+    case TidyInteger:
+      info.GetReturnValue().Set(Nan::New<v8::Number>
+                                (tidyOptGetInt(doc->doc, id)));
+      break;
+    default:
+      const char* res = tidyOptGetValue(doc->doc, id);
+      if (res)
+        info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
+      else
+        info.GetReturnValue().Set(Nan::Null());
+      break;
+    }
+  }
+
+  NAN_METHOD(Doc::optSetValue) {
+    Doc* doc = Nan::ObjectWrap::Unwrap<Doc>(info.Holder());
+    TidyOption opt = doc->asOption(info[0]);
+    if (!opt) return;
+    TidyOptionId id = tidyOptGetId(opt);
+    switch (tidyOptGetType(opt)) {
+    case TidyBoolean:
+      tidyOptSetBool(doc->doc, id, bb(Nan::To<bool>(info[1]).FromJust()));
+      break;
+    case TidyInteger:
+      tidyOptSetInt(doc->doc, id, Nan::To<double>(info[1]).FromJust());
+      break;
+    default:
+      Nan::Utf8String str(info[1]);
+      tidyOptSetValue(doc->doc, id, *str);
+    }
   }
 
 }

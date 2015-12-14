@@ -31,7 +31,7 @@ namespace node_libtidy {
     TidyBuffer buf;
 
     char* data() const {
-      return reinterpret_cast<char*>(buf.bp);
+      return b2c(buf.bp);
     }
 
   };

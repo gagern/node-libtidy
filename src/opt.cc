@@ -4,6 +4,7 @@ namespace node_libtidy {
 
   namespace Opt {
 
+    Nan::Persistent<v8::FunctionTemplate> constructorTemplate;
     Nan::Persistent<v8::Function> constructor;
 
     NAN_MODULE_INIT(Init) {
@@ -19,6 +20,7 @@ namespace node_libtidy {
       SetAccessor(tpl, itpl, "readOnly", getReadOnly);
       SetAccessor(tpl, itpl, "type", getType);
 
+      constructorTemplate.Reset(tpl);
       constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
       Nan::Set(target, Nan::New("TidyOption").ToLocalChecked(),
                Nan::GetFunction(tpl).ToLocalChecked());
@@ -43,7 +45,14 @@ namespace node_libtidy {
       return scope.Escape(obj);
     }
 
-    TidyOption Unwrap(v8::Local<v8::Object> object) {
+    TidyOption Unwrap(v8::Local<v8::Value> value) {
+      v8::Local<v8::FunctionTemplate> tpl = Nan::New(constructorTemplate);
+      if (!tpl->HasInstance(value)) {
+        Nan::ThrowTypeError("Not a valid TidyOption object");
+        return NULL;
+      }
+      v8::Local<v8::Object> object =
+        Nan::To<v8::Object>(value).ToLocalChecked();
       if (object->InternalFieldCount() < 1) {
         Nan::ThrowTypeError("Not a valid TidyOption object");
         return NULL;
@@ -59,7 +68,7 @@ namespace node_libtidy {
 
     NAN_METHOD(toString) {
       TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
-      const char* res = reinterpret_cast<const char*>(tidyOptGetName(opt));
+      const char* res = tidyOptGetName(opt);
       info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
     }
 
@@ -68,14 +77,14 @@ namespace node_libtidy {
       switch (tidyOptGetType(opt)) {
       case TidyBoolean:
         info.GetReturnValue().Set(Nan::New<v8::Boolean>
-                                  (tidyOptGetDefaultBool(opt)));
+                                  (bb(tidyOptGetDefaultBool(opt))));
         break;
       case TidyInteger:
         info.GetReturnValue().Set(Nan::New<v8::Number>
                                   (tidyOptGetDefaultInt(opt)));
         break;
       default:
-        const char* res = reinterpret_cast<const char*>(tidyOptGetDefault(opt));
+        const char* res = tidyOptGetDefault(opt);
         if (res)
           info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
         else
@@ -92,13 +101,13 @@ namespace node_libtidy {
 
     NAN_PROPERTY_GETTER(getName) {
       TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
-      const char* res = reinterpret_cast<const char*>(tidyOptGetName(opt));
+      const char* res = tidyOptGetName(opt);
       info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
     }
 
     NAN_PROPERTY_GETTER(getReadOnly) {
       TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
-      info.GetReturnValue().Set(Nan::New<v8::Boolean>(tidyOptIsReadOnly(opt)));
+      info.GetReturnValue().Set(Nan::New<v8::Boolean>(bb(tidyOptIsReadOnly(opt))));
     }
 
     NAN_PROPERTY_GETTER(getType) {
