@@ -131,7 +131,7 @@ describe("TidyDoc:", function() {
       });
     });
 
-    it("clean and repair", function() {
+    it("clean and repair", function(done) {
       // Can there be any output during clean and repair?
       var messages = "";
       var doc = new TidyDoc();
@@ -147,7 +147,7 @@ describe("TidyDoc:", function() {
       });
     });
 
-    it("diagnostics", function() {
+    it("diagnostics", function(done) {
       var messages =
           'Info: Document content looks like HTML5\n' +
           '1 warning, 0 errors were found!\n\n';
@@ -165,7 +165,7 @@ describe("TidyDoc:", function() {
       });
     });
 
-    it("save to buffer", function() {
+    it("save to buffer", function(done) {
       var doc = new TidyDoc();
       doc.parseBufferSync(testDoc1);
       doc.cleanAndRepairSync();
@@ -183,7 +183,7 @@ describe("TidyDoc:", function() {
       });
     });
 
-    it("will not produce output in case of an error", function() {
+    it("will not produce output in case of an error", function(done) {
       var doc = new TidyDoc();
       doc.parseBufferSync(testDoc2);
       doc.cleanAndRepairSync();
@@ -201,7 +201,7 @@ describe("TidyDoc:", function() {
       });
     });
 
-    it("all in one go", function() {
+    it("all in one go", function(done) {
       var doc = new TidyDoc();
       doc.tidyBuffer(testDoc1, function(err, res) {
         expect(err).to.be.null;
