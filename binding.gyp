@@ -36,7 +36,7 @@
             ],
             'include_dirs': [
                 'tidy-html5/include',
-                '<!(node -e \'require("nan")\')'
+                '<!(node -e "require(\'nan\')")'
             ],
             'defines': [
                 '_REENTRANT',
@@ -46,6 +46,8 @@
                 'SUPPORT_ACCESSIBILITY_CHECKS=1',
                 'LIBTIDY_VERSION="<!(node parse-version.js version)"',
                 'RELEASE_DATE="<!(node parse-version.js date)"',
+                'BUILD_SHARED_LIB',
+                'BUILDING_SHARED_LIB',
             ],
             'conditions': [
                 ['OS=="win"', {

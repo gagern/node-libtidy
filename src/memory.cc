@@ -26,7 +26,7 @@ namespace node_libtidy {
       return reinterpret_cast<memHdr*>(static_cast<char*>(client) - hdrSize());
     }
 
-    void* myAlloc(TidyAllocator*, size_t size) {
+    void* TIDY_CALL myAlloc(TidyAllocator*, size_t size) {
       size_t totalSize = size + hdrSize();
       memHdr* mem = static_cast<memHdr*>(std::malloc(totalSize));
       if (!mem) return NULL;
@@ -35,7 +35,7 @@ namespace node_libtidy {
       return hdr2client(mem);
     }
 
-    void* myRealloc(TidyAllocator*, void* buf, size_t size) {
+    void* TIDY_CALL myRealloc(TidyAllocator*, void* buf, size_t size) {
       memHdr* mem1 = buf ? client2hdr(buf) : NULL;
       ssize_t oldSize = mem1 ? mem1->size : -hdrSize();
       memHdr* mem2 = static_cast<memHdr*>(std::realloc(mem1, size + hdrSize()));
@@ -45,7 +45,7 @@ namespace node_libtidy {
       return hdr2client(mem2);
     }
 
-    void myFree(TidyAllocator*, void* buf) {
+    void TIDY_CALL myFree(TidyAllocator*, void* buf) {
       if (!buf) return;
       memHdr* mem = client2hdr(buf);
       ssize_t totalSize = mem->size + hdrSize();
@@ -53,7 +53,7 @@ namespace node_libtidy {
       std::free(mem);
     }
 
-    void myPanic(TidyAllocator*, ctmbstr msg) {
+    void TIDY_CALL myPanic(TidyAllocator*, ctmbstr msg) {
       std::fputs(msg, stderr);
       std::abort();
     }
