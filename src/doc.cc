@@ -56,7 +56,11 @@ namespace node_libtidy {
       return NULL;
     }
     doc->err.reset();
+    // Error buffer will get turned into a string, so use LF only there
+    int nl = tidyOptGetInt(doc->doc, TidyNewline);
+    tidyOptSetInt(doc->doc, TidyNewline, TidyLF);
     int rc = tidySetErrorBuffer(doc->doc, doc->err);
+    tidyOptSetInt(doc->doc, TidyNewline, nl);
     if (rc) {
       Nan::ThrowError("Error calling tidySetErrorBuffer");
       return NULL;
