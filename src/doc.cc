@@ -29,6 +29,7 @@ namespace node_libtidy {
 
   Doc::Doc() : locked(false) {
     doc = tidyCreateWithAllocator(&allocator);
+    tidyOptSetInt(doc, TidyNewline, TidyLF);
   }
 
   Doc::~Doc() {
