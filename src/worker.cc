@@ -56,9 +56,7 @@ namespace node_libtidy {
           out = output.buffer().ToLocalChecked();
         Nan::Set(res, Nan::New("output").ToLocalChecked(), out);
       }
-      v8::Local<v8::Value> err = Nan::Null();
-      if (!doc->err.isEmpty())
-        err = doc->err.string().ToLocalChecked();
+      v8::Local<v8::Value> err = doc->err.string().ToLocalChecked();
       Nan::Set(res, Nan::New("errlog").ToLocalChecked(), err);
       args[1] = res;
     }
