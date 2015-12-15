@@ -37,7 +37,7 @@ namespace node_libtidy {
 
     void* TIDY_CALL myRealloc(TidyAllocator*, void* buf, size_t size) {
       memHdr* mem1 = buf ? client2hdr(buf) : NULL;
-      ssize_t oldSize = mem1 ? mem1->size : -hdrSize();
+      ssize_t oldSize = mem1 ? ssize_t(mem1->size) : -ssize_t(hdrSize());
       memHdr* mem2 = static_cast<memHdr*>(std::realloc(mem1, size + hdrSize()));
       if (!mem2) return NULL;
       mem2->size = size;
