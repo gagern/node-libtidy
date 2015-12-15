@@ -11,9 +11,9 @@ describe("High-level API:", function() {
   var testDoc1 = Buffer('<!DOCTYPE html>\n<html><head></head>\n' +
                         '<body><p>foo</p></body></html>');
 
-  describe("tidyBuffer:", function(done) {
+  describe("tidyBuffer:", function() {
 
-    it("on simple document", function() {
+    it("on simple document", function(done) {
       libtidy.tidyBuffer(testDoc1, function(err, res) {
         expect(err).to.be.null;
         expect(res).to.contain.key("output");
