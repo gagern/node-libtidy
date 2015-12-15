@@ -49,6 +49,28 @@
                 'BUILD_SHARED_LIB',
                 'BUILDING_SHARED_LIB',
             ],
+            'configurations': {
+                'Debug': {
+                    'defines': [
+                        'DEBUG',
+                    ],
+                    'msvs_settings': {
+                        'VCCLCompilerTool': {
+                            'RuntimeLibrary': 1, # rtMultiThreadedDebug
+                        },
+                    },
+                },
+                'Release': {
+                    'defines': [
+                        'NDEBUG',
+                    ],
+                    'msvs_settings': {
+                        'VCCLCompilerTool': {
+                            'RuntimeLibrary': 0, # rtMultiThreaded
+                        },
+                    },
+                },
+            },
             'conditions': [
                 ['OS=="win"', {
                     'sources': [
@@ -59,11 +81,11 @@
                         '_USE_MATH_DEFINES',
                         '_CRT_SECURE_NO_WARNINGS',
                         '_SCL_SECURE_NO_WARNINGS',
-                        '__CRT_NONSTDC_NO_WARNINGS'
+                        '__CRT_NONSTDC_NO_WARNINGS',
                     ]
                 }, {
                     'cflags': [
-                        '-Wno-missing-field-initializers'
+                        '-Wno-missing-field-initializers',
                     ],
                 }]
             ]
