@@ -9,7 +9,7 @@ var libtidy = require("libtidy");
 <a id="tidy"></a>
 ## tidy(input, [opts,] cb)
 
-Asynchroneous function.
+Asynchronous function.
 Provided for the sake of compatibility with
 [htmltidy](https://www.npmjs.com/package/htmltidy) and
 [htmltidy2](https://www.npmjs.com/package/htmltidy2).
@@ -41,7 +41,7 @@ The function applies the following libtidy options by default:
 <a id="tidyBuffer"></a>
 ## tidyBuffer(input, [opts,] cb)
 
-Asynchroneous function.
+Asynchronous function.
 Suggested entry point for most applications.
 
 * **input** – anything except a buffer will be
@@ -61,7 +61,7 @@ while garbage collection triggers `tidyRelease`.
 <a id="TidyDoc.cleanAndRepair"></a>
 ### TidyDoc.cleanAndRepair(cb)
 
-Asynchroneous method binding `tidyCleanAndRepair`.
+Asynchronous method binding `tidyCleanAndRepair`.
 
 * **cb** – callback following the
   [callback convention](README.md#callback-convention),
@@ -70,7 +70,7 @@ Asynchroneous method binding `tidyCleanAndRepair`.
 <a id="TidyDoc.cleanAndRepairSync"></a>
 ### TidyDoc.cleanAndRepairSync()
 
-Synchroneous method binding `tidyCleanAndRepair`.
+Synchronous method binding `tidyCleanAndRepair`.
 Returns any diagnostics encountered during operation, as a string.
 
 <a id="TidyDoc.getOption"></a>
@@ -205,7 +205,7 @@ so keys can use any of the allowed option naming schemes.
 <a id="TidyDoc.parseBuffer"></a>
 ### TidyDoc.parseBuffer(buf, cb)
 
-Asynchroneous method binding `tidyParseBuffer`.
+Asynchronous method binding `tidyParseBuffer`.
 Callback follows the [callback convention](README.md#callback-convention),
 i.e. have signature `function(exception, {errlog})`
 
@@ -223,7 +223,7 @@ if the input is `Buffer(str)`.
 <a id="TidyDoc.parseBufferSync"></a>
 ### TidyDoc.parseBufferSync(buf)
 
-Synchroneous method binding `tidyParseBuffer`.
+Synchronous method binding `tidyParseBuffer`.
 Returns any diagnostics encountered during operation, as a string.
 
 * **buf** – must be a buffer, other input will be rejected.
@@ -237,20 +237,20 @@ if the input is `Buffer(str)`.
 <a id="TidyDoc.runDiagnostics"></a>
 ### TidyDoc.runDiagnostics(cb)
 
-Asynchroneous method binding `tidyRunDiagnostics`.
+Asynchronous method binding `tidyRunDiagnostics`.
 Callback follows the [callback convention](README.md#callback-convention),
 i.e. have signature `function(exception, {errlog})`
 
 <a id="TidyDoc.runDiagnosticsSync"></a>
 ### TidyDoc.runDiagnosticsSync()
 
-Synchroneous method binding `tidyRunDiagnostics`.
+Synchronous method binding `tidyRunDiagnostics`.
 Returns any diagnostics encountered during operation, as a string.
 
 <a id="TidyDoc.saveBuffer"></a>
 ### TidyDoc.saveBuffer(cb)
 
-Asynchroneous method binding `tidySaveBuffer`.
+Asynchronous method binding `tidySaveBuffer`.
 
 * **cb** – callback following the
   [callback convention](README.md#callback-convention),
@@ -260,13 +260,13 @@ Asynchroneous method binding `tidySaveBuffer`.
 <a id="TidyDoc.saveBufferSync"></a>
 ### TidyDoc.saveBufferSync()
 
-Synchroneous method binding `tidySaveBuffer`.
+Synchronous method binding `tidySaveBuffer`.
 Returns the resulting buffer as a string.
 
 <a id="TidyDoc.tidyBuffer"></a>
 ### TidyDoc.tidyBuffer(buf, cb)
 
-Asynchroneous method performing the four basic steps in a row:
+Asynchronous method performing the four basic steps in a row:
 
 1. `tidyParseBuffer`
 2. `tidyCleanAndRepair`
@@ -321,7 +321,7 @@ or `tidyOptGetDefault`.
 <a id="TidyOption.id"></a>
 ### TidyOption.id
 
-The numeric identifier identidying this option.
+The numeric identifier identifying this option.
 The returned number is not portable across different versions,
 different builds and perhaps even different machines.
 So be careful using this, preferably only within a single process.
