@@ -17,8 +17,8 @@ namespace node_libtidy {
     Nan::SetPrototypeMethod(tpl, "saveBufferSync", saveBufferSync);
     Nan::SetPrototypeMethod(tpl, "getOptionList", getOptionList);
     Nan::SetPrototypeMethod(tpl, "getOption", getOption);
-    Nan::SetPrototypeMethod(tpl, "optGetValue", optGetValue);
-    Nan::SetPrototypeMethod(tpl, "optSetValue", optSetValue);
+    Nan::SetPrototypeMethod(tpl, "optGet", optGet);
+    Nan::SetPrototypeMethod(tpl, "optSet", optSet);
     Nan::SetPrototypeMethod(tpl, "_async", async);
     Nan::SetPrototypeMethod(tpl, "getErrorLog", getErrorLog);
 
@@ -178,7 +178,7 @@ namespace node_libtidy {
     info.GetReturnValue().Set(Opt::Create(opt));
   }
 
-  NAN_METHOD(Doc::optGetValue) {
+  NAN_METHOD(Doc::optGet) {
     Doc* doc = Prelude(info.Holder()); if (!doc) return;
     TidyOption opt = doc->asOption(info[0]);
     if (!opt) return;
@@ -202,26 +202,22 @@ namespace node_libtidy {
     }
   }
 
-  NAN_METHOD(Doc::optSetValue) {
+  NAN_METHOD(Doc::optSet) {
     Doc* doc = Prelude(info.Holder()); if (!doc) return;
     TidyOption opt = doc->asOption(info[0]);
     if (!opt) return;
     TidyOptionId id = tidyOptGetId(opt);
+    v8::Local<v8::Value> val = info[1];
     Bool rc;
-    switch (tidyOptGetType(opt)) {
-    case TidyBoolean:
+    if (val->IsBoolean() && tidyOptGetType(opt) == TidyBoolean) {
       rc = tidyOptSetBool(doc->doc, id, bb(Nan::To<bool>(info[1]).FromJust()));
-      break;
-    case TidyInteger:
+    } else if (val->IsNumber() && tidyOptGetType(opt) == TidyInteger) {
       rc = tidyOptSetInt(doc->doc, id, Nan::To<double>(info[1]).FromJust());
-      break;
-    default:
-      if (info[1]->IsNull() || info[1]->IsUndefined()) {
-        rc = tidyOptSetValue(doc->doc, id, "");
-      } else {
-        Nan::Utf8String str(info[1]);
-        rc = tidyOptSetValue(doc->doc, id, *str);
-      }
+    } else if (val->IsNull() || val->IsUndefined()) {
+      rc = tidyOptSetValue(doc->doc, id, "");
+    } else {
+      Nan::Utf8String str(val);
+      rc = tidyOptSetValue(doc->doc, id, *str);
     }
     if (rc != yes) {
       std::ostringstream buf;

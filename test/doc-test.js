@@ -18,13 +18,13 @@ describe("TidyDoc:", function() {
     it("as constructor", function() {
       var doc = new TidyDoc();
       expect(doc).instanceof(TidyDoc);
-      expect(doc.optGetValue("input-xml")).equal(false);
+      expect(doc.optGet("input-xml")).equal(false);
     });
 
     it("as function", function() {
       var doc = TidyDoc();
       expect(doc).instanceof(TidyDoc);
-      expect(doc.optGetValue("input-xml")).equal(false);
+      expect(doc.optGet("input-xml")).equal(false);
     });
 
   });
@@ -104,9 +104,9 @@ describe("TidyDoc:", function() {
       doc.parseBufferSync(testDoc2);
       doc.cleanAndRepairSync();
       doc.runDiagnosticsSync();
-      expect(doc.optGetValue("force-output")).to.be.false;
-      doc.optSetValue("force-output", true);
-      expect(doc.optGetValue("force-output")).to.be.true;
+      expect(doc.optGet("force-output")).to.be.false;
+      doc.optSet("force-output", true);
+      expect(doc.optGet("force-output")).to.be.true;
       var res = doc.saveBufferSync();
       expect(doc.getErrorLog()).equal("");
       expect(res).to.have.length.above(100);

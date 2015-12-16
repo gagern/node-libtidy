@@ -39,10 +39,10 @@ Object.defineProperties(TidyDoc.prototype, {
           configurable: true,
           enumerable: true,
           get: function() {
-            return doc.optGetValue(opt);
+            return doc.optGet(opt);
           },
           set: function(val) {
-            return doc.optSetValue(opt, val);
+            return doc.optSet(opt, val);
           }
         };
         var name = opt.toString();
@@ -55,7 +55,7 @@ Object.defineProperties(TidyDoc.prototype, {
     },
     set: function(opts) {
       for (var key in opts)
-        this.optSetValue(key, opts[key]);
+        this.optSet(key, opts[key]);
     },
   },
 

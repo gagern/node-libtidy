@@ -31,7 +31,7 @@ module.exports.tidy = function(text, opts, cb) {
     var output = res.output;
     if (Buffer.isBuffer(output))
       output = output.toString();
-    if (!doc.optGetValue("show-warnings"))
+    if (!doc.optGet("show-warnings"))
       errlog = "";
     cb(errlog, output);
   });

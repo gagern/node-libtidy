@@ -27,8 +27,8 @@ namespace node_libtidy {
     static NAN_METHOD(saveBufferSync);
     static NAN_METHOD(getOptionList);
     static NAN_METHOD(getOption);
-    static NAN_METHOD(optGetValue);
-    static NAN_METHOD(optSetValue);
+    static NAN_METHOD(optGet);
+    static NAN_METHOD(optSet);
     static NAN_METHOD(async);
     static NAN_METHOD(getErrorLog);
 

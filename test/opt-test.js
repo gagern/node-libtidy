@@ -14,26 +14,26 @@ describe("TidyOption:", function() {
 
     it("with hyphens", function() {
       var doc = TidyDoc();
-      doc.optSetValue("alt-text", "foo");
-      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
+      doc.optSet("alt-text", "foo");
+      expect(doc.optGet("alt-text")).to.be.equal("foo");
     });
 
     it("with underscores", function() {
       var doc = TidyDoc();
-      doc.optSetValue("alt_text", "foo");
-      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
+      doc.optSet("alt_text", "foo");
+      expect(doc.optGet("alt-text")).to.be.equal("foo");
     });
 
     it("with camelCase", function() {
       var doc = TidyDoc();
-      doc.optSetValue("altText", "foo");
-      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
+      doc.optSet("altText", "foo");
+      expect(doc.optGet("alt-text")).to.be.equal("foo");
     });
 
     it("mixed", function() {
       var doc = TidyDoc();
-      doc.optSetValue("add_xmlDecl", true);
-      expect(doc.optGetValue("add-xml_Decl")).to.be.true;
+      doc.optSet("add_xmlDecl", true);
+      expect(doc.optGet("add-xml_Decl")).to.be.true;
     });
 
   });
@@ -42,63 +42,98 @@ describe("TidyOption:", function() {
 
     it("setting should affect the value", function() {
       var doc = TidyDoc();
-      expect(doc.optGetValue("alt-text")).to.be.null;
-      expect(doc.optSetValue("alt-text", "foo")).to.be.undefined;
-      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
+      expect(doc.optGet("alt-text")).to.be.null;
+      expect(doc.optSet("alt-text", "foo")).to.be.undefined;
+      expect(doc.optGet("alt-text")).to.be.equal("foo");
     });
 
     it("null or undefined clear string settings", function() {
       var doc = TidyDoc();
-      expect(doc.optSetValue("alt-text", "foo")).to.be.undefined;
-      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
-      expect(doc.optSetValue("alt-text", null)).to.be.undefined;
-      expect(doc.optGetValue("alt-text")).to.be.null;
-      expect(doc.optSetValue("alt-text", "bar")).to.be.undefined;
-      expect(doc.optGetValue("alt-text")).to.be.equal("bar");
-      expect(doc.optSetValue("alt-text")).to.be.undefined;
-      expect(doc.optGetValue("alt-text")).to.be.null;
+      expect(doc.optSet("alt-text", "foo")).to.be.undefined;
+      expect(doc.optGet("alt-text")).to.be.equal("foo");
+      expect(doc.optSet("alt-text", null)).to.be.undefined;
+      expect(doc.optGet("alt-text")).to.be.null;
+      expect(doc.optSet("alt-text", "bar")).to.be.undefined;
+      expect(doc.optGet("alt-text")).to.be.equal("bar");
+      expect(doc.optSet("alt-text")).to.be.undefined;
+      expect(doc.optGet("alt-text")).to.be.null;
     });
 
     it("objects get stringified", function() {
       var doc = TidyDoc();
-      doc.optSetValue("alt-text", [1, 2]);
-      expect(doc.optGetValue("alt-text")).to.be.equal("1,2");
+      doc.optSet("alt-text", [1, 2]);
+      expect(doc.optGet("alt-text")).to.be.equal("1,2");
     });
 
     it("invalid keys throw", function() {
       var doc = TidyDoc();
       expect(function() {
-        doc.optGetValue("no_suchOption")
+        doc.optGet("no_suchOption")
       }).to.throw(Error, /'no-such-option'/);
     });
 
     it("can handle boolean options", function() {
       var doc = TidyDoc();
-      expect(doc.optGetValue("add-xml-decl")).to.be.false;
-      expect(doc.optSetValue("add-xml-decl", "truthy")).to.be.undefined;
-      expect(doc.optGetValue("add-xml-decl")).to.be.true;
-      expect(doc.optSetValue("add-xml-decl", false)).to.be.undefined;
-      expect(doc.optGetValue("add-xml-decl")).to.be.false;
+      expect(doc.optGet("add-xml-decl")).to.be.false;
+      expect(doc.optSet("add-xml-decl", "this starts with T")).to.be.undefined;
+      expect(doc.optGet("add-xml-decl")).to.be.true;
+      expect(doc.optSet("add-xml-decl", false)).to.be.undefined;
+      expect(doc.optGet("add-xml-decl")).to.be.false;
+      expect(function() {
+        doc.optSet("add-xml-decl", "some strange value");
+      }).to.throw;
     });
 
     it("can handle integer options", function() {
       var doc = TidyDoc();
-      expect(doc.optGetValue("tab-size")).to.be.equal(8);
-      expect(doc.optSetValue("tab-size", 3)).to.be.undefined;
-      expect(doc.optGetValue("tab-size")).to.be.equal(3);
-      expect(doc.optSetValue("tab-size", "5")).to.be.undefined;
-      expect(doc.optGetValue("tab-size")).to.be.equal(5);
-      expect(doc.optSetValue("tab-size", 2.2)).to.be.undefined;
-      expect(doc.optGetValue("tab-size")).to.be.equal(2);
+      expect(doc.optGet("tab-size")).to.be.equal(8);
+      expect(doc.optSet("tab-size", 3)).to.be.undefined;
+      expect(doc.optGet("tab-size")).to.be.equal(3);
+      expect(doc.optSet("tab-size", "5")).to.be.undefined;
+      expect(doc.optGet("tab-size")).to.be.equal(5);
+      expect(doc.optSet("tab-size", 2.2)).to.be.undefined;
+      expect(doc.optGet("tab-size")).to.be.equal(2);
+      expect(function() { doc.optSet("tab-size", "not a number"); }).to.throw;
+    });
+
+    it("can handle the char-encoding option", function() {
+      var doc = TidyDoc();
+      var utf8 = doc.optGet("char-encoding");
+      expect(doc.optSet("char-encoding", "utf8")).to.be.undefined;
+      expect(doc.optGet("char-encoding")).to.be.equal(utf8);
+      expect(doc.optSet("char-encoding", "latin1")).to.be.undefined;
+      expect(doc.optGet("char-encoding")).to.be.not.equal(utf8);
+      expect(function() { doc.optSet("char-encoding", "foobar"); }).to.throw;
+    });
+
+    it("can handle the newline option", function() {
+      var doc = TidyDoc();
+      expect(doc.optSet("newline", 0)).to.be.undefined;
+      expect(doc.optGet("newline")).to.be.equal(0);
+      expect(doc.optSet("newline", "crlf")).to.be.undefined;
+      expect(doc.optGet("newline")).to.be.equal(1);
+      expect(doc.optSet("newline", 2)).to.be.undefined;
+      expect(doc.optGet("newline")).to.be.equal(2);
+      expect(function() { doc.optSet("newline", "yes"); }).to.throw;
+    });
+
+    it("can handle AutoBool options", function() {
+      var doc = TidyDoc();
+      expect(doc.optGet("indent")).to.be.equal(0);
+      expect(doc.optSet("indent", "auto")).to.be.undefined;
+      expect(doc.optGet("indent")).to.be.equal(2);
+      expect(doc.optSet("indent", "yes")).to.be.undefined;
+      expect(doc.optGet("indent")).to.be.equal(1);
+      expect(function() { doc.optSet("indent", "unknown"); }).to.throw;
     });
 
     it("only affect one document", function() {
       var doc1 = TidyDoc();
       var doc2 = TidyDoc();
-      doc1.optSetValue("alt-text", "foo");
-      expect(doc1.optGetValue("alt-text")).to.be.equal("foo");
-      expect(doc2.optGetValue("alt-text")).to.be.null;
-      expect(TidyDoc().optGetValue("alt-text")).to.be.null;
+      doc1.optSet("alt-text", "foo");
+      expect(doc1.optGet("alt-text")).to.be.equal("foo");
+      expect(doc2.optGet("alt-text")).to.be.null;
+      expect(TidyDoc().optGet("alt-text")).to.be.null;
     });
 
   });
@@ -131,14 +166,14 @@ describe("TidyOption:", function() {
     it("for getting", function() {
       var doc = TidyDoc();
       var opt = doc.getOption("tab-size");
-      expect(doc.optGetValue(opt)).to.be.equal(8);
+      expect(doc.optGet(opt)).to.be.equal(8);
     });
 
     it("for setting", function() {
       var doc = TidyDoc();
       var opt = doc.getOption("tabSize");
-      expect(doc.optSetValue(opt, 3)).to.be.undefined;
-      expect(doc.optGetValue("tab_size")).to.be.equal(3);
+      expect(doc.optSet(opt, 3)).to.be.undefined;
+      expect(doc.optGet("tab_size")).to.be.equal(3);
     });
 
     it("listing options", function() {
@@ -151,7 +186,7 @@ describe("TidyOption:", function() {
       expect(tabSize).to.have.length(1);
       tabSize = tabSize[0];
       expect(tabSize).to.be.an.instanceof(TidyOption);
-      expect(doc.optGetValue(tabSize)).to.be.equal(8);
+      expect(doc.optGet(tabSize)).to.be.equal(8);
     });
 
   });
@@ -178,28 +213,28 @@ describe("TidyOption:", function() {
       var doc = TidyDoc();
       var opts = doc.options;
       expect(opts.alt_text).to.be.null;
-      doc.optSetValue("alt-text", "foo");
+      doc.optSet("alt-text", "foo");
       expect(opts.alt_text).to.be.equal("foo");
       expect(doc.options.alt_text).to.be.equal("foo");
     });
 
     it("can be used for setting", function() {
       var doc = TidyDoc();
-      expect(doc.optGetValue("alt-text")).to.be.null;
+      expect(doc.optGet("alt-text")).to.be.null;
       doc.options.alt_text = "foo";
-      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
+      expect(doc.optGet("alt-text")).to.be.equal("foo");
     });
 
     it("can be assigned to for configuration", function() {
       var doc = TidyDoc();
-      expect(doc.optGetValue("alt-text")).to.be.null;
-      expect(doc.optGetValue("tab-size")).to.be.equal(8);
+      expect(doc.optGet("alt-text")).to.be.null;
+      expect(doc.optGet("tab-size")).to.be.equal(8);
       doc.options = {
         alt_text: "foo",
         tabSize: 3
       };
-      expect(doc.optGetValue("alt-text")).to.be.equal("foo");
-      expect(doc.optGetValue("tab-size")).to.be.equal(3);
+      expect(doc.optGet("alt-text")).to.be.equal("foo");
+      expect(doc.optGet("tab-size")).to.be.equal(3);
     });
 
   });

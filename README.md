@@ -109,13 +109,21 @@ When using a string, you may choose between the original hyphenated name,
 a version where hyphens are replaced by underscores, or a camelCase version.
 So `alt-text`, `alt_text` and `altText` all describe the same option.
 
-The lowest level of option access are the `optGetValue(key)` and
-`optSetValue(key, value)` methods of the `TidyDoc` object.
-These convert the value to a type suitable for the option in question,
-using the JavaScript type conversion rules.
-So the libtidy parser which can turn any option string into a setting
-is not being used, and instead values are processed through functions
-like `tidyOptGetBool` and `tidyOptSetInt` which work on these types.
+The lowest level of option access are the `optGet(key)` and
+`optSet(key, value)` methods of the `TidyDoc` object.
+These encompass the whole `tidyOpt{Get,Set}{Value,Int,Bool}`
+family of functions in the C API, in the following manner:
+
+* `optGet` returns the option value based on its type.
+  Options from an enumerated type are *not* returned as a string,
+  but represented as an integer instead.
+* `optSet` will call `tidyOptSetInt` if the type of the option
+  is integer and the provided value is a number.
+* `optSet` will call `tidyOptSetBool` if the type of the option
+  is boolean and the provided value is boolean as well.
+* In all other cases, `optSet` calls `tidyOptSetValue`,
+  which in turn uses the libtidy option parser.
+  This in particular allows parsing enumerated options.
 
 The methods `getOption(key)` and `getOptionsList()` return a single
 `TidyOption` object resp. the list of all available options.
