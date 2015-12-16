@@ -186,19 +186,24 @@ namespace node_libtidy {
     TidyOption opt = doc->asOption(info[0]);
     if (!opt) return;
     TidyOptionId id = tidyOptGetId(opt);
+    const char* str;
     switch (tidyOptGetType(opt)) {
     case TidyBoolean:
       info.GetReturnValue().Set(Nan::New<v8::Boolean>
                                 (bb(tidyOptGetBool(doc->doc, id))));
       break;
     case TidyInteger:
-      info.GetReturnValue().Set(Nan::New<v8::Number>
-                                (tidyOptGetInt(doc->doc, id)));
+      str = tidyOptGetCurrPick(doc->doc, tidyOptGetId(opt));
+      if (str)
+        info.GetReturnValue().Set(Nan::New<v8::String>(str).ToLocalChecked());
+      else
+        info.GetReturnValue().Set(Nan::New<v8::Number>
+                                  (tidyOptGetInt(doc->doc, id)));
       break;
     default:
-      const char* res = tidyOptGetValue(doc->doc, id);
-      if (res)
-        info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
+      str = tidyOptGetValue(doc->doc, id);
+      if (str)
+        info.GetReturnValue().Set(Nan::New<v8::String>(str).ToLocalChecked());
       else
         info.GetReturnValue().Set(Nan::Null());
     }

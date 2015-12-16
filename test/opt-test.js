@@ -109,21 +109,25 @@ describe("TidyOption:", function() {
     it("can handle the newline option", function() {
       var doc = TidyDoc();
       expect(doc.optSet("newline", 0)).to.be.undefined;
-      expect(doc.optGet("newline")).to.be.equal(0);
+      expect(doc.optGet("newline")).to.be.equal("LF");
       expect(doc.optSet("newline", "crlf")).to.be.undefined;
-      expect(doc.optGet("newline")).to.be.equal(1);
+      expect(doc.optGet("newline")).to.be.equal("CRLF");
       expect(doc.optSet("newline", 2)).to.be.undefined;
-      expect(doc.optGet("newline")).to.be.equal(2);
+      expect(doc.optGet("newline")).to.be.equal("CR");
       expect(function() { doc.optSet("newline", "yes"); }).to.throw;
     });
 
     it("can handle AutoBool options", function() {
       var doc = TidyDoc();
-      expect(doc.optGet("indent")).to.be.equal(0);
+      expect(doc.optGet("indent")).to.be.equal("no");
       expect(doc.optSet("indent", "auto")).to.be.undefined;
-      expect(doc.optGet("indent")).to.be.equal(2);
+      expect(doc.optGet("indent")).to.be.equal("auto");
       expect(doc.optSet("indent", "yes")).to.be.undefined;
-      expect(doc.optGet("indent")).to.be.equal(1);
+      expect(doc.optGet("indent")).to.be.equal("yes");
+      expect(doc.optSet("indent", false)).to.be.undefined;
+      expect(doc.optGet("indent")).to.be.equal("no");
+      expect(doc.optSet("indent", true)).to.be.undefined;
+      expect(doc.optGet("indent")).to.be.equal("yes");
       expect(function() { doc.optSet("indent", "unknown"); }).to.throw;
     });
 

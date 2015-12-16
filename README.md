@@ -114,9 +114,9 @@ The lowest level of option access are the `optGet(key)` and
 These encompass the whole `tidyOpt{Get,Set}{Value,Int,Bool}`
 family of functions in the C API, in the following manner:
 
-* `optGet` returns the option value based on its type.
-  Options from an enumerated type are *not* returned as a string,
-  but represented as an integer instead.
+* For enumerated options, `optGet` will return
+  the current pick value as a string.
+* Otherwise, `optGet` returns the option value based on its type.
 * `optSet` will call `tidyOptSetInt` if the type of the option
   is integer and the provided value is a number.
 * `optSet` will call `tidyOptSetBool` if the type of the option
@@ -124,6 +124,9 @@ family of functions in the C API, in the following manner:
 * In all other cases, `optSet` calls `tidyOptSetValue`,
   which in turn uses the libtidy option parser.
   This in particular allows parsing enumerated options.
+  The passed value is the result of Java conversion to string.
+  One effect of this is that it is possible to pass a
+  boolean value to an AutoBool option and obtain the expected result.
 
 The methods `getOption(key)` and `getOptionsList()` return a single
 `TidyOption` object resp. the list of all available options.
