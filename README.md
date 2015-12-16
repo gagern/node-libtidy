@@ -5,7 +5,8 @@ This package provides bindings to
 a.k.a. [TidyLib][tidylib]
 which can be used to parse and tidy up HTML 5.
 The library is built as a native node extension,
-so you don't have to have the HTML Tidy package installed on your system.
+compiled from sources shipped with the package.
+So you don't have to have the HTML Tidy package installed on your system.
 
 ## Alternatives
 
@@ -34,7 +35,7 @@ so that people can easily compare implementations.
 At the moment, the `tidy` method shared with the `htmltidy` modules
 is the only such replacement which has been implemented.
 
-## API
+## Usage
 
 The project aims to provide fine-grained access to a growing set of
 library functions, with a rather direct mapping between JavaScript and
@@ -112,26 +113,12 @@ So `alt-text`, `alt_text` and `altText` all describe the same option.
 The lowest level of option access are the `optGet(key)` and
 `optSet(key, value)` methods of the `TidyDoc` object.
 These encompass the whole `tidyOpt{Get,Set}{Value,Int,Bool}`
-family of functions in the C API, in the following manner:
-
-* For enumerated options, `optGet` will return
-  the current pick value as a string.
-* Otherwise, `optGet` returns the option value based on its type.
-* `optSet` will call `tidyOptSetInt` if the type of the option
-  is integer and the provided value is a number.
-* `optSet` will call `tidyOptSetBool` if the type of the option
-  is boolean and the provided value is boolean as well.
-* In all other cases, `optSet` calls `tidyOptSetValue`,
-  which in turn uses the libtidy option parser.
-  This in particular allows parsing enumerated options.
-  The passed value is the result of Java conversion to string.
-  One effect of this is that it is possible to pass a
-  boolean value to an AutoBool option and obtain the expected result.
+family of functions in the C API.
 
 The methods `getOption(key)` and `getOptionsList()` return a single
 `TidyOption` object resp. the list of all available options.
 Each such option object contains getters for the following properties:
-`name`, `id`, `type`, `readOnly`, `default`.
+`name`, `category`, `id`, `type`, `readOnly`, `default`, `pickList`.
 
 The `options` property of each `TidyDoc` object can be used for elegant
 high-level access to all the options.
@@ -151,6 +138,42 @@ doc.options = {
   output_xhtml = false,
 };
 ```
+
+## API
+
+The following lists the full public interface of the package.
+Details on each item can be found in the
+[API documentation](https://github.com/gagern/node-libtidy/blob/master/API.md).
+
+- **tidy(input, cb)** – async function (for compatibility)
+- **tidyBuffer(input, cb)** – async function
+- **TidyDoc()** – constructor
+  - **cleanAndRepair(cb)** – async method
+  - **cleanAndRepairSync()** – method
+  - **getOption(key)** – method
+  - **getOptionList()** – method
+  - **optGet(key)** – method
+  - **optGetCurrPick(key)** – method
+  - **optGetDoc(key)** – method
+  - **optGetDocLinksList(key)** – method
+  - **optSet(key, value)** – method
+  - **options** – getter and setter
+  - **parseBuffer(buf, cb)** – async method
+  - **parseBufferSync(buf)** – method
+  - **runDiagnostics(cb)** – async method
+  - **runDiagnosticsSync()** – method
+  - **saveBuffer(cb)** – async method
+  - **saveBufferSync()** – method
+  - **tidyBuffer(buf, cb)** – async method
+- **TidyOption()** – constructor (not for public use)
+  - **category** – getter
+  - **default** – getter
+  - **id** – getter
+  - **name** – getter
+  - **pickList** – getter
+  - **readOnly** – getter
+  - **toString()** – method
+  - **type** – getter
 
 ## License
 

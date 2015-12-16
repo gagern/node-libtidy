@@ -44,6 +44,7 @@
     "src/",
     "test/",
     "/*.js",
+    "/*.md",
     "binding.gyp",
     "tidy-html5/version.txt",
     "tidy-html5/README.md",
