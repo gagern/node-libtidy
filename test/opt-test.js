@@ -127,6 +127,15 @@ describe("TidyOption:", function() {
       expect(function() { doc.optSet("indent", "unknown"); }).to.throw;
     });
 
+    it("can find current value from enum", function() {
+      var doc = TidyDoc();
+      expect(doc.optGetCurrPick("indent")).to.be.equal("no");
+      expect(doc.optSet("indent", "auto")).to.be.undefined;
+      expect(doc.optGetCurrPick("indent")).to.be.equal("auto");
+      expect(doc.optGetCurrPick("alt-text")).to.be.null;
+      expect(doc.optGetCurrPick("input-xml")).to.be.equal("no");
+    });
+
     it("only affect one document", function() {
       var doc1 = TidyDoc();
       var doc2 = TidyDoc();
@@ -134,6 +143,25 @@ describe("TidyOption:", function() {
       expect(doc1.optGet("alt-text")).to.be.equal("foo");
       expect(doc2.optGet("alt-text")).to.be.null;
       expect(TidyDoc().optGet("alt-text")).to.be.null;
+    });
+
+  });
+
+  describe("Documentation for options:", function() {
+
+    it("optGetDoc", function() {
+      var doc = TidyDoc();
+      expect(doc.optGetDoc("newline")).to.match(/Mac OS/);
+    });
+
+    it("optGetDocLinksList", function() {
+      var doc = TidyDoc();
+      var links = doc.optGetDocLinksList("char-encoding");
+      expect(links).to.be.instanceof(Array);
+      expect(links).to.have.length.above(1);
+      expect(links[0]).to.be.instanceof(TidyOption);
+      expect(links.map(String))
+        .to.containSubset(['input-encoding', 'output-encoding']);
     });
 
   });

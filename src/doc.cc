@@ -19,6 +19,9 @@ namespace node_libtidy {
     Nan::SetPrototypeMethod(tpl, "getOption", getOption);
     Nan::SetPrototypeMethod(tpl, "optGet", optGet);
     Nan::SetPrototypeMethod(tpl, "optSet", optSet);
+    Nan::SetPrototypeMethod(tpl, "optGetCurrPick", optGetCurrPick);
+    Nan::SetPrototypeMethod(tpl, "optGetDoc", optGetDoc);
+    Nan::SetPrototypeMethod(tpl, "optGetDocLinksList", optGetDocLinksList);
     Nan::SetPrototypeMethod(tpl, "_async", async);
     Nan::SetPrototypeMethod(tpl, "getErrorLog", getErrorLog);
 
@@ -198,7 +201,6 @@ namespace node_libtidy {
         info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
       else
         info.GetReturnValue().Set(Nan::Null());
-      break;
     }
   }
 
@@ -228,6 +230,42 @@ namespace node_libtidy {
       }
       Nan::ThrowError(NewString(trim(buf.str())));
     }
+  }
+
+  NAN_METHOD(Doc::optGetCurrPick) {
+    Doc* doc = Prelude(info.Holder()); if (!doc) return;
+    TidyOption opt = doc->asOption(info[0]);
+    if (!opt) return;
+    const char* res = tidyOptGetCurrPick(doc->doc, tidyOptGetId(opt));
+    if (res)
+      info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
+    else
+      info.GetReturnValue().Set(Nan::Null());
+  }
+  
+  NAN_METHOD(Doc::optGetDoc) {
+    Doc* doc = Prelude(info.Holder()); if (!doc) return;
+    TidyOption opt = doc->asOption(info[0]);
+    if (!opt) return;
+    const char* res = tidyOptGetDoc(doc->doc, opt);
+    if (res)
+      info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
+    else
+      info.GetReturnValue().Set(Nan::Null());
+  }
+  
+  NAN_METHOD(Doc::optGetDocLinksList) {
+    Doc* doc = Prelude(info.Holder()); if (!doc) return;
+    TidyOption opt = doc->asOption(info[0]);
+    if (!opt) return;
+    v8::Local<v8::Array> arr = Nan::New<v8::Array>();
+    TidyIterator iter = tidyOptGetDocLinksList(doc->doc, opt);
+    while (iter) {
+      TidyOption opt = tidyOptGetNextDocLinks(doc->doc, &iter);
+      v8::Local<v8::Object> obj = Opt::Create(opt);
+      Nan::Set(arr, arr->Length(), obj);
+    }
+    info.GetReturnValue().Set(arr);
   }
 
   // arguments:

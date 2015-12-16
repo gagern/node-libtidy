@@ -29,6 +29,9 @@ namespace node_libtidy {
     static NAN_METHOD(getOption);
     static NAN_METHOD(optGet);
     static NAN_METHOD(optSet);
+    static NAN_METHOD(optGetCurrPick);
+    static NAN_METHOD(optGetDoc);
+    static NAN_METHOD(optGetDocLinksList);
     static NAN_METHOD(async);
     static NAN_METHOD(getErrorLog);
 
