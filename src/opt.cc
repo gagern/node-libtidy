@@ -14,6 +14,7 @@ namespace node_libtidy {
       v8::Local<v8::ObjectTemplate> itpl = tpl->InstanceTemplate();
 
       Nan::SetPrototypeMethod(tpl, "toString", toString);
+      SetAccessor(tpl, itpl, "category", getCategory);
       SetAccessor(tpl, itpl, "default", getDefault);
       SetAccessor(tpl, itpl, "id", getId);
       SetAccessor(tpl, itpl, "name", getName);
@@ -72,6 +73,32 @@ namespace node_libtidy {
       info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
     }
 
+    NAN_PROPERTY_GETTER(getCategory) {
+      TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
+      const char* res;
+      switch (tidyOptGetCategory(opt)) {
+      case TidyMarkup:
+        res = "Markup";
+        break;
+      case TidyDiagnostics:
+        res = "Diagnostics";
+        break;
+      case TidyPrettyPrint:
+        res = "PrettyPrint";
+        break;
+      case TidyEncoding:
+        res = "Encoding";
+        break;
+      case TidyMiscellaneous:
+        res = "Miscellaneous";
+        break;
+      default:
+        Nan::ThrowError("Unknown option category");
+        return;
+      }
+      info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
+    }
+
     NAN_PROPERTY_GETTER(getDefault) {
       TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
       switch (tidyOptGetType(opt)) {
@@ -124,7 +151,8 @@ namespace node_libtidy {
         res = "string";
         break;
       default:
-        res = "unknown";
+        Nan::ThrowError("Unknown option type");
+        return;
       }
       info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
     }

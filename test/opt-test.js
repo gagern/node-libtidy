@@ -186,6 +186,7 @@ describe("TidyOption:", function() {
       expect(opt.default).to.be.equal(8);
       expect(opt.readOnly).to.be.false;
       expect(opt.type).to.be.equal("integer");
+      expect(opt.category).to.be.equal("PrettyPrint");
     });
 
     it("lookup by id", function() {

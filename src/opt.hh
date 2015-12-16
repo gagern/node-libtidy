@@ -9,6 +9,7 @@ namespace node_libtidy {
     TidyOption Unwrap(v8::Local<v8::Value> object);
 
     NAN_METHOD(toString);
+    NAN_PROPERTY_GETTER(getCategory);
     NAN_PROPERTY_GETTER(getDefault);
     NAN_PROPERTY_GETTER(getId);
     NAN_PROPERTY_GETTER(getName);
