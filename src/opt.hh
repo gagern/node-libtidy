@@ -13,6 +13,7 @@ namespace node_libtidy {
     NAN_PROPERTY_GETTER(getDefault);
     NAN_PROPERTY_GETTER(getId);
     NAN_PROPERTY_GETTER(getName);
+    NAN_PROPERTY_GETTER(getPickList);
     NAN_PROPERTY_GETTER(getReadOnly);
     NAN_PROPERTY_GETTER(getType);
 

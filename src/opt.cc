@@ -18,6 +18,7 @@ namespace node_libtidy {
       SetAccessor(tpl, itpl, "default", getDefault);
       SetAccessor(tpl, itpl, "id", getId);
       SetAccessor(tpl, itpl, "name", getName);
+      SetAccessor(tpl, itpl, "pickList", getPickList);
       SetAccessor(tpl, itpl, "readOnly", getReadOnly);
       SetAccessor(tpl, itpl, "type", getType);
 
@@ -130,6 +131,18 @@ namespace node_libtidy {
       TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
       const char* res = tidyOptGetName(opt);
       info.GetReturnValue().Set(Nan::New<v8::String>(res).ToLocalChecked());
+    }
+
+    NAN_PROPERTY_GETTER(getPickList) {
+      TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
+      v8::Local<v8::Array> arr = Nan::New<v8::Array>();
+      TidyIterator iter = tidyOptGetPickList(opt);
+      while (iter) {
+        const char* pick = tidyOptGetNextPick(opt, &iter);
+        v8::Local<v8::Value> str = Nan::New<v8::String>(pick).ToLocalChecked();
+        Nan::Set(arr, arr->Length(), str);
+      }
+      info.GetReturnValue().Set(arr);
     }
 
     NAN_PROPERTY_GETTER(getReadOnly) {

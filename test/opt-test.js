@@ -187,6 +187,7 @@ describe("TidyOption:", function() {
       expect(opt.readOnly).to.be.false;
       expect(opt.type).to.be.equal("integer");
       expect(opt.category).to.be.equal("PrettyPrint");
+      expect(doc.getOption("indent").pickList).to.eql(["no", "yes", "auto"]);
     });
 
     it("lookup by id", function() {
