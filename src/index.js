@@ -19,6 +19,9 @@ module.exports.tidyBuffer = function(buf, opts, cb) {
   }
   opts = opts || {};
   var doc = TidyDoc();
+  doc.options = {
+    newline: "LF",
+  };
   doc.options = opts;
   if (!Buffer.isBuffer(buf))
     text = Buffer(String(buf));

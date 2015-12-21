@@ -51,6 +51,10 @@ Suggested entry point for most applications.
   [callback convention](README.md#callback-convention),
   i.e. with signature `function(exception, {output, errlog})`.
 
+The function applies the following libtidy options by default:
+
+* newline = LF
+
 <a id="TidyDoc"></a>
 ## TidyDoc()
 

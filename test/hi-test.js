@@ -27,6 +27,13 @@ describe("High-level API:", function() {
       });
     });
 
+    it("doesn't use CRLF in its output", function(done) {
+      libtidy.tidyBuffer(testDoc1, function(err, res) {
+        expect(res.output.toString()).to.not.match(/\r\n/);
+        done();
+      });
+    });
+
   });
 
 });
