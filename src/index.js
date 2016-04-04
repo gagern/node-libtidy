@@ -21,6 +21,6 @@ module.exports.tidyBuffer = function(buf, opts, cb) {
   var doc = TidyDoc();
   doc.options = opts;
   if (!Buffer.isBuffer(buf))
-    text = Buffer(String(buf));
+    buf = Buffer(String(buf));
   doc.tidyBuffer(buf, cb);
 };
