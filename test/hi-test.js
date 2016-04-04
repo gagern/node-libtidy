@@ -34,6 +34,17 @@ describe("High-level API:", function() {
       });
     });
 
+    it("Converts argument to buffer", function(done) {
+      libtidy.tidyBuffer({
+        toString: testDoc1.toString.bind(testDoc1)
+      }, function(err, res) {
+        expect(err).to.be.null;
+        expect(Buffer.isBuffer(res.output)).ok;
+        expect(res.output.toString()).to.match(/<title>.*<\/title>/);
+        done();
+      });
+    });
+
   });
 
 });
