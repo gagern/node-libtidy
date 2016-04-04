@@ -115,7 +115,7 @@ The lowest level of option access are the `optGet(key)` and
 These encompass the whole `tidyOpt{Get,Set}{Value,Int,Bool}`
 family of functions in the C API.
 
-The methods `getOption(key)` and `getOptionsList()` return a single
+The methods `getOption(key)` and `getOptionList()` return a single
 `TidyOption` object resp. the list of all available options.
 Each such option object contains getters for the following properties:
 `name`, `category`, `id`, `type`, `readOnly`, `default`, `pickList`.
