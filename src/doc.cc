@@ -5,7 +5,7 @@
 namespace node_libtidy {
 
   Nan::Persistent<v8::Function> Doc::constructor;
-  
+
   NAN_MODULE_INIT(Doc::Init) {
     v8::Local<v8::FunctionTemplate> tpl = Nan::New<v8::FunctionTemplate>(New);
     tpl->SetClassName(Nan::New("TidyDoc").ToLocalChecked());
@@ -44,7 +44,7 @@ namespace node_libtidy {
       obj->Wrap(info.This());
       info.GetReturnValue().Set(info.This());
     } else {
-      const int argc = 1; 
+      const int argc = 1;
       v8::Local<v8::Value> argv[argc] = {info[0]};
       v8::Local<v8::Function> cons = Nan::New(constructor);
       info.GetReturnValue().Set(cons->NewInstance(argc, argv));
@@ -247,7 +247,7 @@ namespace node_libtidy {
     else
       info.GetReturnValue().Set(Nan::Null());
   }
-  
+
   NAN_METHOD(Doc::optGetDoc) {
     Doc* doc = Prelude(info.Holder()); if (!doc) return;
     TidyOption opt = doc->asOption(info[0]);
@@ -258,7 +258,7 @@ namespace node_libtidy {
     else
       info.GetReturnValue().Set(Nan::Null());
   }
-  
+
   NAN_METHOD(Doc::optGetDocLinksList) {
     Doc* doc = Prelude(info.Holder()); if (!doc) return;
     TidyOption opt = doc->asOption(info[0]);
