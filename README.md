@@ -181,7 +181,14 @@ The project itself uses [the MIT license](LICENSE.md).
 For the license of the underlying library, please see
 [its license file][upstream-license]
 
+## Contributing
 
+To clone the project and start developing run the following commands
+```sh
+git clone --recursive https://github.com/gagern/node-libtidy.git
+npm install
+npm test
+```
 
 [tidylib]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/tidylib.html
 [tidyParseBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/group__Parse.html#gaa28ce34c95750f150205843885317851
