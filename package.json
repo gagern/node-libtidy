@@ -23,6 +23,9 @@
     "indent"
   ],
   "author": "Martin von Gagern <Martin.vGagern@gmx.net>",
+  "contributors":  [
+    "Raphael Ackermann <raphael.ackermann@gmail.com>"
+  ],
   "license": "MIT",
   "gypfile": true,
   "bugs": {
