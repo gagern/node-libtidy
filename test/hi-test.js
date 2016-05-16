@@ -20,7 +20,7 @@ describe("High-level API:", function() {
         expect(res).to.contain.key("errlog");
         expect(res.errlog).to.match(/inserting missing/);
         expect(res.errlog).to.match(/looks like HTML5/);
-        expect(res.errlog).to.match(/were found/);
+        expect(res.errlog).to.match(/Tidy found/);
         expect(Buffer.isBuffer(res.output)).ok;
         expect(res.output.toString()).to.match(/<title>.*<\/title>/);
         done();

@@ -54,7 +54,7 @@ describe("TidyDoc:", function() {
     it("diagnostics", function() {
       var messages =
           'Info: Document content looks like HTML5\n' +
-          '1 warning, 0 errors were found!\n\n';
+          'Tidy found 1 warning and 0 errors!\n\n';
       var doc = new TidyDoc();
       doc.parseBufferSync(testDoc1);
       doc.cleanAndRepairSync();
@@ -77,7 +77,7 @@ describe("TidyDoc:", function() {
     it("report errors in diagnostics", function() {
       var messages =
           'Info: Document content looks like HTML5\n' +
-          '5 warnings, 2 errors were found!\n\n' +
+          'Tidy found 5 warnings and 2 errors!\n\n' +
           'This document has errors that must be fixed before\n' +
           'using HTML Tidy to generate a tidied up version.\n\n';
       var doc = new TidyDoc();
@@ -150,7 +150,7 @@ describe("TidyDoc:", function() {
     it("diagnostics", function(done) {
       var messages =
           'Info: Document content looks like HTML5\n' +
-          '1 warning, 0 errors were found!\n\n';
+          'Tidy found 1 warning and 0 errors!\n\n';
       var doc = new TidyDoc();
       doc.parseBufferSync(testDoc1);
       doc.cleanAndRepairSync();
@@ -209,7 +209,7 @@ describe("TidyDoc:", function() {
         expect(res).to.contain.key("errlog");
         expect(res.errlog).to.match(/inserting missing/);
         expect(res.errlog).to.match(/looks like HTML5/);
-        expect(res.errlog).to.match(/were found/);
+        expect(res.errlog).to.match(/Tidy found/);
         expect(Buffer.isBuffer(res.output)).ok;
         expect(res.output.toString()).to.match(/<title>.*<\/title>/);
         done();

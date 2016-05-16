@@ -18,7 +18,7 @@
                 'tidy-html5/src/pprint.c',
                 'tidy-html5/src/charsets.c',
                 'tidy-html5/src/clean.c',
-                'tidy-html5/src/localize.c',
+                'tidy-html5/src/message.c',
                 'tidy-html5/src/config.c',
                 'tidy-html5/src/alloc.c',
                 'tidy-html5/src/attrask.c',
@@ -33,6 +33,7 @@
                 'tidy-html5/src/tidylib.c',
                 'tidy-html5/src/mappedio.c',
                 'tidy-html5/src/gdoc.c',
+                'tidy-html5/src/language.c',
             ],
             'include_dirs': [
                 'tidy-html5/include',
