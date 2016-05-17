@@ -184,11 +184,35 @@ For the license of the underlying library, please see
 ## Contributing
 
 To clone the project and start developing run the following commands
+
 ```sh
 git clone --recursive https://github.com/gagern/node-libtidy.git
+cd node-libtidy
 npm install
 npm test
 ```
+
+If you want to update to the latest version of libtidy, you can execute
+
+```sh
+cd tidy-html5
+git checkout master
+echo "Bump libtidy to `git describe --tags`" | tee ../commit_message.tmp
+git add tidy-html5
+npm install
+npm test
+git commit -e -F commit_message.tmp
+rm commit_message.tmp
+```
+
+You may want to substitute some other branch name instead of `master`,
+e.g. in order to get the latest version of some release branch.
+
+If you think that using a given version is important not just for yourself,
+but for others as well, then please open an issue and request a release
+using that version.
+If the version in question is not the latest release,
+then please provide some reason why that particular version would be useful.
 
 [tidylib]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/tidylib.html
 [tidyParseBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.1.25/group__Parse.html#gaa28ce34c95750f150205843885317851
