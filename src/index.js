@@ -8,9 +8,7 @@ for (key in lib)
 
 var TidyDoc = require("./TidyDoc");
 
-var htmltidy = require("./htmltidy");
-for (key in htmltidy)
-  module.exports[key] = htmltidy[key];
+module.exports.compat = require("./compat");
 
 module.exports.tidyBuffer = function(buf, opts, cb) {
   if (typeof cb === "undefined" && typeof opts === "function") {

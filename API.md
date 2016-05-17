@@ -6,38 +6,6 @@ General usage:
 var libtidy = require("libtidy");
 ```
 
-<a id="tidy"></a>
-## tidy(input, [opts,] cb)
-
-Asynchronous function.
-Provided for the sake of compatibility with
-[htmltidy](https://www.npmjs.com/package/htmltidy) and
-[htmltidy2](https://www.npmjs.com/package/htmltidy2).
-
-Similar to [`tidyBuffer`](#tidyBuffer),
-the arguments to the callback are different.
-In case of a non-serious error,
-the first argument will contain any diagnostic messages as a string,
-while the second argument holds the output, again as a string.
-If the `show-warnings` option is false
-(which is the default for this function),
-then in case of a successfully generated output
-an empty diagnostics string will be returned.
-
-* **input** – anything except a buffer will be
-  converted to String and then turned into a buffer.
-* **opts** – a dictionary of [libtidy options](README.md#options).
-* **cb** – callback with signature `function(err, output)`,
-  where `err` is an `Error` in case of a serious error,
-  or a diagnostic string in case of less serious problems.
-
-The function applies the following libtidy options by default:
-
-* show-warnings = no
-* tidy-mark = no
-* force-output = yes
-* quiet = no
-
 <a id="tidyBuffer"></a>
 ## tidyBuffer(input, [opts,] cb)
 
@@ -370,3 +338,51 @@ Note that enumerated options, including those of type AutoBool,
 will be represented as type `"integer"`.
 
 Wraps `tidyOptGetType`.
+
+<a id="compat"></a>
+## compat
+
+Elements of the `compat` namespace offer
+compatibility with other libtidy bindings for node.
+
+<a id="htmltidy"></a>
+### compat.htmltidy
+
+This offers a drop-in replacement for
+[htmltidy](https://www.npmjs.com/package/htmltidy) and
+[htmltidy2](https://www.npmjs.com/package/htmltidy2).
+
+```diff
+-var htmltidy = require("htmltidy2");
++var htmltidy = require("libtidy").compat.htmltidy;
+```
+
+<a id="compat.htmltidy.tidy"></a>
+<a id="tidy"></a>
+## compat.htmltidy.tidy(input, [opts,] cb)
+
+Asynchronous function.
+
+Similar to [`tidyBuffer`](#tidyBuffer),
+but the arguments to the callback are different.
+In case of a non-serious error,
+the first argument will contain any diagnostic messages as a string,
+while the second argument holds the output, again as a string.
+If the `show-warnings` option is false
+(which is the default for this function),
+then in case of a successfully generated output
+an empty diagnostics string will be returned.
+
+* **input** – anything except a buffer will be
+  converted to String and then turned into a buffer.
+* **opts** – a dictionary of [libtidy options](README.md#options).
+* **cb** – callback with signature `function(err, output)`,
+  where `err` is an `Error` in case of a serious error,
+  or a diagnostic string in case of less serious problems.
+
+The function applies the following libtidy options by default:
+
+* show-warnings = no
+* tidy-mark = no
+* force-output = yes
+* quiet = no

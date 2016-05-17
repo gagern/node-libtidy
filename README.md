@@ -145,7 +145,6 @@ The following lists the full public interface of the package.
 Details on each item can be found in the
 [API documentation](https://github.com/gagern/node-libtidy/blob/master/API.md).
 
-- **tidy(input, cb)** – async function (for compatibility)
 - **tidyBuffer(input, cb)** – async function
 - **TidyDoc()** – constructor
   - **cleanAndRepair(cb)** – async method
@@ -174,6 +173,9 @@ Details on each item can be found in the
   - **readOnly** – getter
   - **toString()** – method
   - **type** – getter
+- **compat** – namespace
+  - **libtidy** – namespace
+    - **tidy** – async function
 
 ## License
 

@@ -7,7 +7,7 @@ var expect = chai.expect;
 // Can't use htmltidy 0.0.6 (the “original”) due to
 // https://github.com/vavere/htmltidy/issues/24
 var fork = require("htmltidy2");
-var clone = require("../");
+var clone = require("../").compat.htmltidy;
 
 describe("htmltidy interface:", function() {
 
