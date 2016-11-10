@@ -9,6 +9,7 @@ for (key in lib)
 var TidyDoc = require("./TidyDoc");
 
 module.exports.compat = require("./compat");
+module.exports.gulp = require("./gulp");
 
 module.exports.tidyBuffer = function(buf, opts, cb) {
   if (typeof cb === "undefined" && typeof opts === "function") {

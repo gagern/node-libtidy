@@ -1,6 +1,6 @@
 {
   "name": "libtidy",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Node bindings to the HTML Tidy library",
   "main": "src/index.js",
   "scripts": {
@@ -36,12 +36,12 @@
     "chai": "^3.4.1",
     "chai-subset": "^1.2.0",
     "htmltidy2": "^0.1.4",
-    "mocha": "^2.3.4",
-    "nan": "^2.1.0",
-    "node-gyp": "^3.2.1"
+    "mocha": "^3.1.2"
   },
   "dependencies": {
-    "bindings": "^1.2.1"
+    "bindings": "^1.2.1",
+    "nan": "^2.1.0",
+    "node-gyp": "^3.2.1"
   },
   "files": [
     "src/",
