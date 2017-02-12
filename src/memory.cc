@@ -92,7 +92,12 @@ namespace node_libtidy {
       return;
     }
 #endif
-    if (v8::V8::IsDead()) {
+#if (NODE_MODULE_VERSION > 46)
+    if (v8::Isolate::GetCurrent()->IsDead())
+#else
+    if (v8::V8::IsDead())
+#endif
+    {
       assert(diff <= 0);
       return;
     }

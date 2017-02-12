@@ -34,14 +34,14 @@ namespace node_libtidy {
         info.GetReturnValue().Set(info.This());
       } else {
         v8::Local<v8::Function> cons = Nan::New(constructor);
-        info.GetReturnValue().Set(cons->NewInstance());
+        info.GetReturnValue().Set(Nan::NewInstance(cons).ToLocalChecked());
       }
     }
 
     v8::Local<v8::Object> Create(TidyOption opt) {
       Nan::EscapableHandleScope scope;
       v8::Local<v8::Function> cons = Nan::New(constructor);
-      v8::Local<v8::Object> obj = cons->NewInstance();
+      v8::Local<v8::Object> obj = Nan::NewInstance(cons).ToLocalChecked();
       Nan::SetInternalFieldPointer
         (obj, 0, const_cast<void*>(reinterpret_cast<const void*>(opt)));
       return scope.Escape(obj);
