@@ -134,8 +134,8 @@ type _TidyOption = TidyOption
 
 /**
  * Type for libtidy options
- * @generated with dts-dom
- * {@link aa}
+ * @generated with script in
+ * {@link https://gist.github.com/jokester/5c18601db8a9b290fabcfbab4cfc454b}
  */
 namespace Generated {
     interface TidyDocOption {
