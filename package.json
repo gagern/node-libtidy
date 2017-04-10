@@ -3,6 +3,7 @@
   "version": "0.3.2",
   "description": "Node bindings to the HTML Tidy library",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "install": "node-gyp rebuild",
     "test": "mocha"
