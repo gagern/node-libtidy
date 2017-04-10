@@ -8,6 +8,7 @@
  *
  */
 
+/// <reference types="node" />
 import * as libtidy from '../';
 import { expect } from 'chai';
 
@@ -27,3 +28,14 @@ doc.options = {
 
 expect(doc.optGet("Wrap")).to.eq(83);
 expect(doc.optGet("input-encoding")).to.eq("win1252");
+
+(function() {
+  var testDoc1 = Buffer.from('<!DOCTYPE html>\n<html><head></head>\n' +
+                        '<body><p>foo</p></body></html>');
+  var messages = "";
+  var doc = new libtidy.TidyDoc();
+  doc.parseBufferSync(testDoc1);
+  var res = doc.cleanAndRepairSync();
+  expect(doc.getErrorLog()).equal(messages);
+  expect(res).to.equal(messages);
+})();
