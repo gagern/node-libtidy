@@ -84,6 +84,13 @@ describe("TidyOption:", function() {
       }).to.throw();
     });
 
+    it("setting a readonly option throw", function() {
+      var doc = TidyDoc();
+      var opt = doc.getOption(8);
+      expect(opt.readOnly).to.be.true;
+      expect(function() { doc.optSet(8); }).to.throw(Error, /' is readonly/);
+    });
+
     it("can handle integer options", function() {
       var doc = TidyDoc();
       expect(doc.optGet("tab-size")).to.be.equal(8);

@@ -214,6 +214,12 @@ namespace node_libtidy {
     Doc* doc = Prelude(info.Holder()); if (!doc) return;
     TidyOption opt = doc->asOption(info[0]);
     if (!opt) return;
+    if (tidyOptIsReadOnly(opt) != no) {
+      std::ostringstream buf;
+      buf << "Option '" << tidyOptGetName(opt) << "' is readonly";
+      Nan::ThrowError(NewString(buf.str()));
+      return;
+    }
     TidyOptionId id = tidyOptGetId(opt);
     v8::Local<v8::Value> val = info[1];
     Bool rc;
