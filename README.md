@@ -177,6 +177,11 @@ Details on each item can be found in the
   - **libtidy** – namespace
     - **tidy** – async function
 
+## TypeScript support
+
+This library ships with a `.d.ts` for TypeScript users.
+There is no need to find in `@types/` or roll your own \<3.
+
 ## License
 
 The project itself uses [the MIT license](LICENSE.md).
