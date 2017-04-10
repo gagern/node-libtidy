@@ -19,3 +19,11 @@ expect(doc.optGet("AltText")).to.eq('foo');
 
 doc.optSet("wrap", 82);
 expect(doc.optGet("Wrap")).to.eq(82);
+
+doc.options = {
+    wrap: 83,
+    InputEncoding: "win1252"
+};
+
+expect(doc.optGet("Wrap")).to.eq(83);
+expect(doc.optGet("input-encoding")).to.eq("win1252");

@@ -85,6 +85,8 @@ interface TidyDoc extends Generated.TidyDocOption {
     saveBuffer(callback: TidyCallback): void
     tidyBuffer(buf: Buffer, callback: TidyCallback): void
 
+    // batch set/get of options
+    options: OptionDict
     // Methods that return TidyOption object
     getOptionList(): TidyOption[]
     getOption(option: TidyOption): TidyOption
