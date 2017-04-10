@@ -84,11 +84,14 @@ describe("TidyOption:", function() {
       }).to.throw();
     });
 
-    it("setting a readonly option throw", function() {
+    it("setting a readonly option throws", function() {
       var doc = TidyDoc();
-      var opt = doc.getOption(8);
+      var opt = doc.getOption('doctype-mode');
+      // If readOnly changes in future, this will help to locate the fail.
       expect(opt.readOnly).to.be.true;
-      expect(function() { doc.optSet(8); }).to.throw(Error, /' is readonly/);
+      expect(function() {
+        doc.optSet('doctype-mode');
+      }).to.throw(Error, /' is readonly/);
     });
 
     it("can handle integer options", function() {
