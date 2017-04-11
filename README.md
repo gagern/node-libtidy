@@ -179,8 +179,9 @@ Details on each item can be found in the
 
 ## TypeScript support
 
-This library ships with a `.d.ts` for TypeScript users.
-There is no need to find in `@types/` or roll your own \<3.
+This library ships with a `.d.ts` declaration for TypeScript users.
+
+For contributors: the declaration is updated with the script in `util/gen-typescript-decl.ts`.
 
 ## License
 
