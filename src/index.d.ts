@@ -4,7 +4,6 @@
 
 export const tidyBuffer: TidyBufferStatic
 export const TidyDoc: TidyDocConstructor
-export const TidyOption: TidyOptionConstructor
 export const compat: TidyCompat
 /// <reference types="node" />
 
@@ -46,21 +45,15 @@ interface TidyBufferStatic {
     (document: string | Buffer, callback: TidyCallback): void
 }
 
-interface TidyOption {
+export class TidyOption {
+    // creation of TidyOption is not exposed
+    private constructor()
     readonly name: string
     readonly type: "boolean" | "integer" | "doctype" | "string"
     readonly readOnly: boolean
     readonly pickList: string[]
     readonly id: number
     toString(): string
-}
-
-/**
- * TidyOption type and constructor (not for public use)
- */
-interface TidyOptionConstructor {
-    new (): TidyOption
-    (): TidyOption
 }
 
 /**

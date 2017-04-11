@@ -54,6 +54,13 @@ describe('index.d.ts', () => {
 
     expect(doc.optGet("Wrap")).to.eq(83);
     expect(doc.optGet("input-encoding")).to.eq("win1252");
+
+    expect(doc.getOption('char-encoding'))
+      .to.be.instanceof(libtidy.TidyOption);
+
+    // libtidy.TidyOption is not callable with () or new
+    // libtidy.TidyOption();
+    // new libtidy.TidyOption);
   });
 });
 
