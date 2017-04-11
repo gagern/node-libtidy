@@ -86,7 +86,7 @@ interface TidyDoc extends Generated.TidyDocOption {
     tidyBuffer(buf: Buffer, callback: TidyCallback): void
 
     // batch set/get of options
-    options: OptionDict
+    options: Generated.OptionDict
     // Methods that return TidyOption object
     getOptionList(): TidyOption[]
     getOption(option: TidyOption): TidyOption
@@ -123,21 +123,13 @@ interface TidyCompat {
     }
 }
 
-// just an alias to prevent recursive name resolution
-type _TidyOption = TidyOption
-
-/************************************************************************
- * The Generated namespace is generated, and not meant for manual edit.
- *
- * @see https://gist.github.com/jokester/5c18601db8a9b290fabcfbab4cfc454b
- ************************************************************************
-
+// START-GENERATED-NAMESPACE
+// The rest of this file is generated.
 /**
  * Type for libtidy options
- * @generated with script in
- * {@link https://gist.github.com/jokester/5c18601db8a9b290fabcfbab4cfc454b}
+ * @generated with /util/gen-typescript-decl.ts
  */
-namespace Generated {
+declare namespace Generated {
     interface TidyDocOption {
         /**
          * indent-spaces
@@ -822,4 +814,5 @@ namespace Generated {
         escape_scripts?: boolean;
         EscapeScripts?: boolean;
     }
+
 }

@@ -34,10 +34,15 @@
   },
   "homepage": "https://github.com/gagern/node-libtidy#readme",
   "devDependencies": {
+    "@types/chai": "^3.5.0",
+    "@types/node": "^7.0.12",
     "chai": "^3.4.1",
     "chai-subset": "^1.2.0",
+    "dts-dom": "^0.1.18",
     "htmltidy2": "^0.1.4",
-    "mocha": "^3.1.2"
+    "mocha": "^3.1.2",
+    "ts-node": "^3.0.2",
+    "typescript": "^2.2.2"
   },
   "dependencies": {
     "bindings": "^1.2.1",
