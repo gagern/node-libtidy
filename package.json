@@ -6,7 +6,7 @@
   "types": "src/index.d.ts",
   "scripts": {
     "install": "node-gyp rebuild",
-    "test": "mocha"
+    "test": "mocha --compilers ts:ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
   "homepage": "https://github.com/gagern/node-libtidy#readme",
   "devDependencies": {
     "@types/chai": "^3.5.0",
+    "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
     "chai": "^3.4.1",
     "chai-subset": "^1.2.0",
