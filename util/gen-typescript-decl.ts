@@ -206,12 +206,6 @@ Type for libtidy options
                 underscoreName(o.name),
                 valueType(o),
                 dom.DeclarationFlags.Optional));
-
-        optionDict.members.push(
-            dom.create.property(
-                camelCaseName(o.name),
-                valueType(o),
-                dom.DeclarationFlags.Optional));
     }
     nm.members.push(optAccessors);
     nm.members.push(optionDict);

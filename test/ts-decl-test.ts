@@ -49,7 +49,7 @@ describe('index.d.ts', () => {
 
     doc.options = {
       wrap: 83,
-      InputEncoding: "win1252"
+      input_encoding: "win1252"
     };
 
     expect(doc.optGet("Wrap")).to.eq(83);
