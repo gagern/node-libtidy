@@ -6,6 +6,7 @@
   "types": "src/index.d.ts",
   "scripts": {
     "install": "node-gyp rebuild",
+    "update-tsd": "ts-node util/gen-typescript-decl.ts",
     "test": "mocha --compilers ts:ts-node/register"
   },
   "repository": {

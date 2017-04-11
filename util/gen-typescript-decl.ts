@@ -21,11 +21,18 @@ function main() {
     var newContent = oldContent + `// START-GENERATED-NAMESPACE
 // The rest of this file is generated.
 ` + generate();
-    fs.writeFileSync(dts, newContent);
+
+    if (newContent === oldContent) {
+        console.log(`no need to update ${dts}`);
+        process.exit(0);
+    } else {
+        fs.writeFileSync(dts, newContent);
+        console.log(`successfully updated ${dts}`);
+        process.exit(0);
+    }
 }
 
 main();
-process.exit(0);
 
 /**
  * Create type for union of constants
