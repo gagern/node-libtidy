@@ -81,7 +81,17 @@ describe("TidyOption:", function() {
       expect(doc.optGet("add-xml-decl")).to.be.false;
       expect(function() {
         doc.optSet("add-xml-decl", "some strange value");
-      }).to.throw;
+      }).to.throw();
+    });
+
+    it("setting a readonly option throws", function() {
+      var doc = TidyDoc();
+      var opt = doc.getOption('doctype-mode');
+      // If readOnly changes in future, this will help to locate the fail.
+      expect(opt.readOnly).to.be.true;
+      expect(function() {
+        doc.optSet('doctype-mode');
+      }).to.throw(Error, /' is readonly/);
     });
 
     it("can handle integer options", function() {
@@ -93,7 +103,7 @@ describe("TidyOption:", function() {
       expect(doc.optGet("tab-size")).to.be.equal(5);
       expect(doc.optSet("tab-size", 2.2)).to.be.undefined;
       expect(doc.optGet("tab-size")).to.be.equal(2);
-      expect(function() { doc.optSet("tab-size", "not a number"); }).to.throw;
+      expect(function() { doc.optSet("tab-size", "not a number"); }).to.throw();
     });
 
     it("can handle the char-encoding option", function() {
@@ -103,7 +113,7 @@ describe("TidyOption:", function() {
       expect(doc.optGet("char-encoding")).to.be.equal(utf8);
       expect(doc.optSet("char-encoding", "latin1")).to.be.undefined;
       expect(doc.optGet("char-encoding")).to.be.not.equal(utf8);
-      expect(function() { doc.optSet("char-encoding", "foobar"); }).to.throw;
+      expect(function() { doc.optSet("char-encoding", "foobar"); }).to.throw();
     });
 
     it("can handle the newline option", function() {
@@ -114,7 +124,7 @@ describe("TidyOption:", function() {
       expect(doc.optGet("newline")).to.be.equal("CRLF");
       expect(doc.optSet("newline", 2)).to.be.undefined;
       expect(doc.optGet("newline")).to.be.equal("CR");
-      expect(function() { doc.optSet("newline", "yes"); }).to.throw;
+      expect(function() { doc.optSet("newline", "yes"); }).to.throw();
     });
 
     it("can handle AutoBool options", function() {
@@ -128,7 +138,7 @@ describe("TidyOption:", function() {
       expect(doc.optGet("indent")).to.be.equal("no");
       expect(doc.optSet("indent", true)).to.be.undefined;
       expect(doc.optGet("indent")).to.be.equal("yes");
-      expect(function() { doc.optSet("indent", "unknown"); }).to.throw;
+      expect(function() { doc.optSet("indent", "unknown"); }).to.throw();
     });
 
     it("can find current value from enum", function() {
