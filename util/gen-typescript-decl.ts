@@ -152,7 +152,7 @@ function validateOption(d: libtidy.TidyDoc, o: libtidy.TidyOption) {
 function optGet(o: libtidy.TidyOption): dom.MethodDeclaration {
   const method = dom.create.method("optGet",
     [dom.create.parameter("key", nameUnion(o))],
-    valueType(o));
+    valueType(o, "get"));
 
   const jsdoc = [`${o.category} / ${o.name} (${o.type})`];
   method.jsDocComment = jsdoc.join("\n");
@@ -162,36 +162,35 @@ function optGet(o: libtidy.TidyOption): dom.MethodDeclaration {
 
 function optSet(o: libtidy.TidyOption): dom.MethodDeclaration {
   const method = dom.create.method("optSet",
-    [dom.create.parameter("key", nameUnion(o)), dom.create.parameter("value", valueType(o))],
+    [dom.create.parameter("key", nameUnion(o)), dom.create.parameter("value", valueType(o, "set"))],
     dom.create.namedTypeReference("void")
   )
   return method;
 }
 
 /**
- * create a type for available option values
+ * the type for available option values
  * @param o
+ * @param use: type for get or set, setter accepts a wider range of values
  */
-function valueType(o: libtidy.TidyOption): dom.Type {
+function valueType(o: libtidy.TidyOption, use: "set" | "get"): dom.Type {
 
   if (o.type === "integer") {
     if (!o.pickList.length) {
       return dom.create.namedTypeReference("number");
     }
 
-    // numbers for picklist items
-    const pickListNumbers = o.pickList
-      .map(v => +(v.match(/^\d+/) || [])[0]);
+    const optionValues = o.pickList.map(v => JSON.stringify(v));
 
-    if (pickListNumbers.every(v => !isNaN(v))) {
-      const u = pickListNumbers.map(<any>dom.create.namedTypeReference);
-      return dom.create.union(<any>u);
-    } else {
-      const u = o.pickList
-        .map(v => JSON.stringify(v))
-        .map(<any>dom.create.namedTypeReference);
-      return dom.create.union(<any>u);
+    if (use === 'set') {
+      // when setting: number can be used as well
+      for (let i = o.pickList.length; --i >= 0;) {
+        optionValues.splice(i + 1, 0, <any>[i]);
+      }
     }
+
+    const u = optionValues.map(<any>dom.create.namedTypeReference);
+    return dom.create.union(<any>u);
   } else if (o.type === "string") {
 
     if (!o.pickList.length) {
@@ -241,7 +240,7 @@ Type for libtidy options
     optionDict.members.push(
       dom.create.property(
         underscoreName(o.name),
-        valueType(o),
+        valueType(o, "set"),
         dom.DeclarationFlags.Optional));
   }
   nm.members.push(optAccessors);

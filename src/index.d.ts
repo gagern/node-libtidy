@@ -145,27 +145,27 @@ declare namespace Generated {
     * Encoding / char-encoding (integer)
     */
     optGet(key: "char-encoding" | "char_encoding" | "CharEncoding"): "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis";
-    optSet(key: "char-encoding" | "char_encoding" | "CharEncoding", value: "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis"): void;
+    optSet(key: "char-encoding" | "char_encoding" | "CharEncoding", value: "raw" | 0 | "ascii" | 1 | "latin0" | 2 | "latin1" | 3 | "utf8" | 4 | "iso2022" | 5 | "mac" | 6 | "win1252" | 7 | "ibm858" | 8 | "utf16le" | 9 | "utf16be" | 10 | "utf16" | 11 | "big5" | 12 | "shiftjis" | 13): void;
     /**
     * Encoding / input-encoding (integer)
     */
     optGet(key: "input-encoding" | "input_encoding" | "InputEncoding"): "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis";
-    optSet(key: "input-encoding" | "input_encoding" | "InputEncoding", value: "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis"): void;
+    optSet(key: "input-encoding" | "input_encoding" | "InputEncoding", value: "raw" | 0 | "ascii" | 1 | "latin0" | 2 | "latin1" | 3 | "utf8" | 4 | "iso2022" | 5 | "mac" | 6 | "win1252" | 7 | "ibm858" | 8 | "utf16le" | 9 | "utf16be" | 10 | "utf16" | 11 | "big5" | 12 | "shiftjis" | 13): void;
     /**
     * Encoding / output-encoding (integer)
     */
     optGet(key: "output-encoding" | "output_encoding" | "OutputEncoding"): "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis";
-    optSet(key: "output-encoding" | "output_encoding" | "OutputEncoding", value: "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis"): void;
+    optSet(key: "output-encoding" | "output_encoding" | "OutputEncoding", value: "raw" | 0 | "ascii" | 1 | "latin0" | 2 | "latin1" | 3 | "utf8" | 4 | "iso2022" | 5 | "mac" | 6 | "win1252" | 7 | "ibm858" | 8 | "utf16le" | 9 | "utf16be" | 10 | "utf16" | 11 | "big5" | 12 | "shiftjis" | 13): void;
     /**
     * Encoding / newline (integer)
     */
     optGet(key: "newline" | "Newline"): "LF" | "CRLF" | "CR";
-    optSet(key: "newline" | "Newline", value: "LF" | "CRLF" | "CR"): void;
+    optSet(key: "newline" | "Newline", value: "LF" | 0 | "CRLF" | 1 | "CR" | 2): void;
     /**
     * Markup / doctype-mode (integer)
     */
     optGet(key: "doctype-mode" | "doctype_mode" | "DoctypeMode"): "html5" | "omit" | "auto" | "strict" | "transitional" | "user";
-    optSet(key: "doctype-mode" | "doctype_mode" | "DoctypeMode", value: "html5" | "omit" | "auto" | "strict" | "transitional" | "user"): void;
+    optSet(key: "doctype-mode" | "doctype_mode" | "DoctypeMode", value: "html5" | 0 | "omit" | 1 | "auto" | 2 | "strict" | 3 | "transitional" | 4 | "user" | 5): void;
     /**
     * Markup / doctype (string)
     */
@@ -175,7 +175,7 @@ declare namespace Generated {
     * Markup / repeated-attributes (integer)
     */
     optGet(key: "repeated-attributes" | "repeated_attributes" | "RepeatedAttributes"): "keep-first" | "keep-last";
-    optSet(key: "repeated-attributes" | "repeated_attributes" | "RepeatedAttributes", value: "keep-first" | "keep-last"): void;
+    optSet(key: "repeated-attributes" | "repeated_attributes" | "RepeatedAttributes", value: "keep-first" | 0 | "keep-last" | 1): void;
     /**
     * Markup / alt-text (string)
     */
@@ -225,7 +225,7 @@ declare namespace Generated {
     * PrettyPrint / indent (integer)
     */
     optGet(key: "indent" | "Indent"): "no" | "yes" | "auto";
-    optSet(key: "indent" | "Indent", value: "no" | "yes" | "auto"): void;
+    optSet(key: "indent" | "Indent", value: "no" | 0 | "yes" | 1 | "auto" | 2): void;
     /**
     * Markup / coerce-endtags (boolean)
     */
@@ -445,7 +445,7 @@ declare namespace Generated {
     * Markup / show-body-only (integer)
     */
     optGet(key: "show-body-only" | "show_body_only" | "ShowBodyOnly"): "no" | "yes" | "auto";
-    optSet(key: "show-body-only" | "show_body_only" | "ShowBodyOnly", value: "no" | "yes" | "auto"): void;
+    optSet(key: "show-body-only" | "show_body_only" | "ShowBodyOnly", value: "no" | 0 | "yes" | 1 | "auto" | 2): void;
     /**
     * Markup / fix-uri (boolean)
     */
@@ -510,7 +510,7 @@ declare namespace Generated {
     * Encoding / output-bom (integer)
     */
     optGet(key: "output-bom" | "output_bom" | "OutputBom"): "no" | "yes" | "auto";
-    optSet(key: "output-bom" | "output_bom" | "OutputBom", value: "no" | "yes" | "auto"): void;
+    optSet(key: "output-bom" | "output_bom" | "OutputBom", value: "no" | 0 | "yes" | 1 | "auto" | 2): void;
     /**
     * Markup / replace-color (boolean)
     */
@@ -544,13 +544,13 @@ declare namespace Generated {
     /**
     * Diagnostics / accessibility-check (integer)
     */
-    optGet(key: "accessibility-check" | "accessibility_check" | "AccessibilityCheck"): 0 | 1 | 2 | 3;
-    optSet(key: "accessibility-check" | "accessibility_check" | "AccessibilityCheck", value: 0 | 1 | 2 | 3): void;
+    optGet(key: "accessibility-check" | "accessibility_check" | "AccessibilityCheck"): "0 (Tidy Classic)" | "1 (Priority 1 Checks)" | "2 (Priority 2 Checks)" | "3 (Priority 3 Checks)";
+    optSet(key: "accessibility-check" | "accessibility_check" | "AccessibilityCheck", value: "0 (Tidy Classic)" | 0 | "1 (Priority 1 Checks)" | 1 | "2 (Priority 2 Checks)" | 2 | "3 (Priority 3 Checks)" | 3): void;
     /**
     * PrettyPrint / vertical-space (integer)
     */
     optGet(key: "vertical-space" | "vertical_space" | "VerticalSpace"): "no" | "yes" | "auto";
-    optSet(key: "vertical-space" | "vertical_space" | "VerticalSpace", value: "no" | "yes" | "auto"): void;
+    optSet(key: "vertical-space" | "vertical_space" | "VerticalSpace", value: "no" | 0 | "yes" | 1 | "auto" | 2): void;
     /**
     * PrettyPrint / punctuation-wrap (boolean)
     */
@@ -565,7 +565,7 @@ declare namespace Generated {
     * Markup / merge-divs (integer)
     */
     optGet(key: "merge-divs" | "merge_divs" | "MergeDivs"): "no" | "yes" | "auto";
-    optSet(key: "merge-divs" | "merge_divs" | "MergeDivs", value: "no" | "yes" | "auto"): void;
+    optSet(key: "merge-divs" | "merge_divs" | "MergeDivs", value: "no" | 0 | "yes" | 1 | "auto" | 2): void;
     /**
     * Markup / decorate-inferred-ul (boolean)
     */
@@ -580,12 +580,12 @@ declare namespace Generated {
     * PrettyPrint / sort-attributes (integer)
     */
     optGet(key: "sort-attributes" | "sort_attributes" | "SortAttributes"): "none" | "alpha";
-    optSet(key: "sort-attributes" | "sort_attributes" | "SortAttributes", value: "none" | "alpha"): void;
+    optSet(key: "sort-attributes" | "sort_attributes" | "SortAttributes", value: "none" | 0 | "alpha" | 1): void;
     /**
     * Markup / merge-spans (integer)
     */
     optGet(key: "merge-spans" | "merge_spans" | "MergeSpans"): "no" | "yes" | "auto";
-    optSet(key: "merge-spans" | "merge_spans" | "MergeSpans", value: "no" | "yes" | "auto"): void;
+    optSet(key: "merge-spans" | "merge_spans" | "MergeSpans", value: "no" | 0 | "yes" | 1 | "auto" | 2): void;
     /**
     * Markup / anchor-as-name (boolean)
     */
@@ -617,13 +617,13 @@ declare namespace Generated {
     indent_spaces?: number;
     wrap?: number;
     tab_size?: number;
-    char_encoding?: "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis";
-    input_encoding?: "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis";
-    output_encoding?: "raw" | "ascii" | "latin0" | "latin1" | "utf8" | "iso2022" | "mac" | "win1252" | "ibm858" | "utf16le" | "utf16be" | "utf16" | "big5" | "shiftjis";
-    newline?: "LF" | "CRLF" | "CR";
-    doctype_mode?: "html5" | "omit" | "auto" | "strict" | "transitional" | "user";
+    char_encoding?: "raw" | 0 | "ascii" | 1 | "latin0" | 2 | "latin1" | 3 | "utf8" | 4 | "iso2022" | 5 | "mac" | 6 | "win1252" | 7 | "ibm858" | 8 | "utf16le" | 9 | "utf16be" | 10 | "utf16" | 11 | "big5" | 12 | "shiftjis" | 13;
+    input_encoding?: "raw" | 0 | "ascii" | 1 | "latin0" | 2 | "latin1" | 3 | "utf8" | 4 | "iso2022" | 5 | "mac" | 6 | "win1252" | 7 | "ibm858" | 8 | "utf16le" | 9 | "utf16be" | 10 | "utf16" | 11 | "big5" | 12 | "shiftjis" | 13;
+    output_encoding?: "raw" | 0 | "ascii" | 1 | "latin0" | 2 | "latin1" | 3 | "utf8" | 4 | "iso2022" | 5 | "mac" | 6 | "win1252" | 7 | "ibm858" | 8 | "utf16le" | 9 | "utf16be" | 10 | "utf16" | 11 | "big5" | 12 | "shiftjis" | 13;
+    newline?: "LF" | 0 | "CRLF" | 1 | "CR" | 2;
+    doctype_mode?: "html5" | 0 | "omit" | 1 | "auto" | 2 | "strict" | 3 | "transitional" | 4 | "user" | 5;
     doctype?: "html5" | "omit" | "auto" | "strict" | "transitional" | "user";
-    repeated_attributes?: "keep-first" | "keep-last";
+    repeated_attributes?: "keep-first" | 0 | "keep-last" | 1;
     alt_text?: string;
     slide_style?: string;
     error_file?: string;
@@ -633,7 +633,7 @@ declare namespace Generated {
     show_info?: boolean;
     show_warnings?: boolean;
     quiet?: boolean;
-    indent?: "no" | "yes" | "auto";
+    indent?: "no" | 0 | "yes" | 1 | "auto" | 2;
     coerce_endtags?: boolean;
     omit_optional_tags?: boolean;
     hide_endtags?: boolean;
@@ -677,7 +677,7 @@ declare namespace Generated {
     gnu_emacs?: boolean;
     gnu_emacs_file?: string;
     literal_attributes?: boolean;
-    show_body_only?: "no" | "yes" | "auto";
+    show_body_only?: "no" | 0 | "yes" | 1 | "auto" | 2;
     fix_uri?: boolean;
     lower_literals?: boolean;
     hide_comments?: boolean;
@@ -690,22 +690,22 @@ declare namespace Generated {
     escape_cdata?: boolean;
     language?: string;
     ncr?: boolean;
-    output_bom?: "no" | "yes" | "auto";
+    output_bom?: "no" | 0 | "yes" | 1 | "auto" | 2;
     replace_color?: boolean;
     css_prefix?: string;
     new_inline_tags?: string;
     new_blocklevel_tags?: string;
     new_empty_tags?: string;
     new_pre_tags?: string;
-    accessibility_check?: 0 | 1 | 2 | 3;
-    vertical_space?: "no" | "yes" | "auto";
+    accessibility_check?: "0 (Tidy Classic)" | 0 | "1 (Priority 1 Checks)" | 1 | "2 (Priority 2 Checks)" | 2 | "3 (Priority 3 Checks)" | 3;
+    vertical_space?: "no" | 0 | "yes" | 1 | "auto" | 2;
     punctuation_wrap?: boolean;
     merge_emphasis?: boolean;
-    merge_divs?: "no" | "yes" | "auto";
+    merge_divs?: "no" | 0 | "yes" | 1 | "auto" | 2;
     decorate_inferred_ul?: boolean;
     preserve_entities?: boolean;
-    sort_attributes?: "none" | "alpha";
-    merge_spans?: "no" | "yes" | "auto";
+    sort_attributes?: "none" | 0 | "alpha" | 1;
+    merge_spans?: "no" | 0 | "yes" | 1 | "auto" | 2;
     anchor_as_name?: boolean;
     indent_with_tabs?: boolean;
     skip_nested?: boolean;
