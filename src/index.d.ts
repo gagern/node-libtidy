@@ -1,6 +1,6 @@
 // Type definitions for node-libtidy v0.3
-// Project: node-libtidy
-// Definitions by: Wang Guan <momocraft@gmail.com> / https://github.com/jokester
+// Project: node-libtidy / https://github.com/gagern/node-libtidy
+// Definitions by: Wang Guan <momocraft@gmail.com>
 // vim: shiftwidth=2
 
 export const tidyBuffer: TidyBufferStatic

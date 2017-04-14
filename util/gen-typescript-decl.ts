@@ -1,5 +1,6 @@
 /**
- * Generate TypeScript decl for options in node-libtidy (https://github.com/gagern/node-libtidy)
+ * Generate TypeScript decl for options in node-libtidy
+ *
  * @author Wang Guan <momocraft@gmail.com>
  *
  * vim: shiftwidth=2
