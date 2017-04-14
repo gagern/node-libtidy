@@ -225,6 +225,10 @@ Type for libtidy options
 
   // type of TidyDoc.options
   const optionDict = dom.create.interface("OptionDict");
+  optionDict.jsDocComment = `
+NOTE: some values will not be returned from getter.
+TypeScript does not allow us to distinguish setter and getter in declaration.
+`.trim();
   // optGet / optSet overloads in TidyDoc
   const optAccessors = dom.create.interface('TidyDocOption');
 

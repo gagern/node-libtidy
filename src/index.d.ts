@@ -613,6 +613,10 @@ declare namespace Generated {
     optSet(key: "escape-scripts" | "escape_scripts" | "EscapeScripts", value: boolean): void;
   }
 
+  /**
+  * NOTE: some values will not be returned from getter.
+  * TypeScript does not allow us to distinguish setter and getter in declaration.
+  */
   interface OptionDict {
     indent_spaces?: number;
     wrap?: number;
