@@ -1,4 +1,5 @@
 {
+    "__comment": "setting for running gen-typescript-decl.ts",
     "compilerOptions": {
         "target": "es6",
         "noImplicitAny": true,

@@ -25,7 +25,6 @@ describe('index.d.ts', () => {
     doc.parseBufferSync(testDoc1);
     var res = doc.cleanAndRepairSync();
     const diag: string = doc.runDiagnosticsSync();
-    const log: string = doc.getErrorLog();
     const buf: Buffer = doc.saveBufferSync();
   });
 

@@ -70,7 +70,7 @@ interface TidyDoc extends Generated.TidyDocOption {
   parseBufferSync(document: Buffer): string
   runDiagnosticsSync(): string
   saveBufferSync(): Buffer
-  getErrorLog(): string
+  // getErrorLog(): string // is not needed: other calls already return log
 
   // Async calls
   cleanAndRepair(callback: TidyCallback): void
