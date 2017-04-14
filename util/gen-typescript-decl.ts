@@ -9,7 +9,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dom from 'dts-dom';
-import * as chai from 'chai';
+import { expect } from 'chai';
 
 // a bootstrap declaration is required to call libtidy.TidyDoc.getOptionList()
 import * as libtidy from '../';
@@ -57,18 +57,6 @@ function format(lines: string[]) {
     .join("\n");
 }
 
-/**
- * Change "skip-nested" to "skip_nested"
- * @param optionName option name in '-' notation
- */
-function underscoreName(optionName: string) {
-  return optionName.replace(/-/g, '_');
-}
-
-function upperFirst(word: string) {
-  return word.replace(/(^.)/, (m: any, $1: string) => $1.toUpperCase());
-}
-
 function uniq<T>(items: T[], eq?: (a1: T, a2: T) => boolean) {
   const result: T[] = [];
   for (const i of items) {
@@ -86,6 +74,18 @@ function camelCaseName(optionName: string) {
     .split('-')
     .map(upperFirst)
     .join('');
+}
+
+/**
+ * Change "skip-nested" to "skip_nested"
+ * @param optionName option name in '-' notation
+ */
+function underscoreName(optionName: string) {
+  return optionName.replace(/-/g, '_');
+}
+
+function upperFirst(word: string) {
+  return word.replace(/(^.)/, (m: any, $1: string) => $1.toUpperCase());
 }
 
 /**
@@ -117,26 +117,69 @@ function nameUnion(o: libtidy.TidyOption): dom.Type {
 }
 
 /**
+ * throw if our expectation of libtidy is incorrect
+ */
+function validateOption(d: libtidy.TidyDoc, o: libtidy.TidyOption) {
+  if (o.readOnly)
+    return;
+
+  if (o.type === 'integer' && o.pickList.length) {
+    // integer and a non-empty picklist:
+    // optGet() return normalized value
+    o.pickList.forEach((value, i) => {
+      expect(d.optSet(<any>o.name, i)).to.eq(undefined);
+      expect(d.optGet(<any>o.name)).to.eq(value);
+
+      expect(d.optSet(<any>o.name, value)).to.eq(undefined);
+      expect(d.optGet(<any>o.name)).to.eq(value);
+    });
+
+  } else if (o.type === 'integer') {
+  } else if (o.type === 'boolean') {
+    expect(typeof d.optGet(<any>o)).eq("boolean");
+    expect(typeof d.optGet(<any>o.name)).eq("boolean");
+    expect(typeof d.optGet(<any>o.id)).eq("boolean");
+
+    // optSet a boolean option returns undefined
+    expect(d.optSet(<any>o, true)).eq(undefined);
+    expect(d.optSet(<any>o, false)).eq(undefined);
+  } else if (o.type === 'string') {
+  } else
+    throw new Error(`not implemented for option type '${o.type}'`);
+
+}
+
+function optGet(o: libtidy.TidyOption): dom.MethodDeclaration {
+  const method = dom.create.method("optGet",
+    [dom.create.parameter("key", nameUnion(o))],
+    valueType(o));
+
+  const jsdoc = [`${o.category} / ${o.name} (${o.type})`];
+  method.jsDocComment = jsdoc.join("\n");
+
+  return method;
+}
+
+function optSet(o: libtidy.TidyOption): dom.MethodDeclaration {
+  const method = dom.create.method("optSet",
+    [dom.create.parameter("key", nameUnion(o)), dom.create.parameter("value", valueType(o))],
+    dom.create.namedTypeReference("void")
+  )
+  return method;
+}
+
+/**
  * create a type for available option values
  * @param o
  */
 function valueType(o: libtidy.TidyOption): dom.Type {
-
-  switch (o.type) {
-    case "integer":
-    case "boolean":
-    case "string":
-      break;
-    default:
-      throw new Error(`not implemented`);
-  }
 
   if (o.type === "integer") {
     if (!o.pickList.length) {
       return dom.create.namedTypeReference("number");
     }
 
-    // If the picklist
+    // numbers for picklist items
     const pickListNumbers = o.pickList
       .map(v => +(v.match(/^\d+/) || [])[0]);
 
@@ -162,8 +205,7 @@ function valueType(o: libtidy.TidyOption): dom.Type {
     return dom.create.namedTypeReference("boolean");
   }
 
-  console.error(o);
-  throw new Error(`not implemented`);
+  throw new Error(`not implemented for option type '${o.type}'`);
 }
 
 /**
@@ -187,32 +229,14 @@ Type for libtidy options
   // optGet / optSet overloads in TidyDoc
   const optAccessors = dom.create.interface('TidyDocOption');
 
-  // cowardly see if boolean options are boolean
   for (const o of options) {
-    if (o.type === "boolean") {
-      chai.expect(typeof doc.optGet(o)).eq("boolean");
-      chai.expect(typeof doc.optGet(o.name)).eq("boolean");
-    }
+    validateOption(doc, o);
   }
 
   for (const o of options) {
-    const values = valueType(o);
-    const v = dom.create.alias(underscoreName(o.name), values);
+    optAccessors.members.push(optGet(o));
 
-    const getOpt = dom.create.method("optGet",
-      [dom.create.parameter("key", nameUnion(o))],
-      valueType(o));
-
-    getOpt.jsDocComment = o.name;
-
-    optAccessors.members.push(getOpt)
-
-    optAccessors.members.push(
-      dom.create.method("optSet",
-        [dom.create.parameter("key", nameUnion(o)), dom.create.parameter("value", valueType(o))],
-        dom.create.namedTypeReference("void")
-      )
-    )
+    optAccessors.members.push(optSet(o));
 
     optionDict.members.push(
       dom.create.property(
