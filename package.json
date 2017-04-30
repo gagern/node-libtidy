@@ -36,7 +36,7 @@
   },
   "homepage": "https://github.com/gagern/node-libtidy#readme",
   "devDependencies": {
-    "@types/chai": "^3.5.0",
+    "@types/chai": "^3.4.1",
     "@types/mocha": "^2.2.40",
     "@types/node": "^7.0.12",
     "chai": "^3.4.1",
