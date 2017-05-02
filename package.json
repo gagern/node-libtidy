@@ -6,8 +6,8 @@
   "types": "src/index.d.ts",
   "scripts": {
     "install": "node-gyp rebuild",
-    "prepublish": "ts-node util/gen-typescript-decl.ts",
-    "pretest": "ts-node util/gen-typescript-decl.ts",
+    "prepublish": "node util/gen-typescript-decl.js",
+    "pretest": "node util/gen-typescript-decl.js",
     "test": "mocha --compilers ts:ts-node/register"
   },
   "repository": {
