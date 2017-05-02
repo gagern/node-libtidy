@@ -15,7 +15,7 @@ const libtidy = require("../");
  * Main entrypoint: generate and update ../src/index.d.ts
  */
 function main() {
-  const dts = path.join(__dirname, ...'../src/options.d.ts'.split('/'));
+  const dts = path.join(__dirname, "..", "src", "options.d.ts");
   const content = generate();
 
   fs.writeFileSync(dts, content);
