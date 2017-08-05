@@ -21,6 +21,8 @@ addons:
 env:
  - CC=gcc-4.8 CXX=g++-4.8
 before_install:
+ - if [[ ${TRAVIS_OS_NAME} == osx ]]; then export CXX=clang; fi
+ - $CXX --version
  - env
 install:
  - npm install --build-from-source
@@ -40,7 +42,7 @@ deploy:
   tags: true
   condition: >
    ${TRAVIS_TAG} == v*([0-9]).*([0-9]).*([0-9])
-   && ${node_js} == [0-9]*
+   && ${TRAVIS_NODE_VERSION} == [0-9]*
 after_deploy:
  - git clean -fdx
  - npm install --fallback-to-build=false
