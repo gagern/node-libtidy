@@ -26,12 +26,12 @@ build_script:
 test_script:
   - npm test
 
+after_test:
+  - node_modules/.bin/node-pre-gyp package
+
 artifacts:
   - path: build\stage\gagern\node-libtidy\releases\download\**\*.tar.gz
     name: binary
-
-before_deploy:
-  - node_modules/.bin/node-pre-gyp package
 
 deploy:
   - provider: GitHub
