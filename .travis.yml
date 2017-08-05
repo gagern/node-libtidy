@@ -44,7 +44,7 @@ deploy:
  file_glob: true
  skip_cleanup: true
  on:
-  repo: gagern/libxmljs
+  repo: gagern/node-libtidy
   tags: true
   condition: >
    ${TRAVIS_TAG} == v*([0-9]).*([0-9]).*([0-9])
