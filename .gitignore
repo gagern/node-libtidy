@@ -1,4 +1,5 @@
 /build/
+/lib/
 /node_modules/
 .gdb_history
 npm-debug.log

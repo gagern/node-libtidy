@@ -1,10 +1,17 @@
 {
   "name": "libtidy",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Node bindings to the HTML Tidy library",
   "main": "src/index.js",
+  "binary": {
+    "module_name": "tidy",
+    "module_path": "./lib/",
+    "host": "https://github.com",
+    "remote_path": "./gagern/node-libtidy/releases/download/v{version}/",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
+  },
   "scripts": {
-    "install": "node-gyp rebuild",
+    "install": "node-pre-gyp install --fallback-to-build",
     "test": "mocha"
   },
   "repository": {
@@ -23,7 +30,7 @@
     "indent"
   ],
   "author": "Martin von Gagern <Martin.vGagern@gmx.net>",
-  "contributors":  [
+  "contributors": [
     "Raphael Ackermann <raphael.ackermann@gmail.com>"
   ],
   "license": "MIT",
@@ -39,10 +46,12 @@
     "mocha": "^3.1.2"
   },
   "dependencies": {
-    "bindings": "^1.2.1",
     "nan": "^2.1.0",
-    "node-gyp": "^3.2.1"
+    "node-pre-gyp": "^0.6.36"
   },
+  "bundledDependencies": [
+    "node-pre-gyp"
+  ],
   "files": [
     "src/",
     "test/",

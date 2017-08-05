@@ -1,8 +1,14 @@
 environment:
+ github_release_token:
+  secure: TTQbwwwftUsijup2DaIPSnfBoYtXNrPVUFxNdFF/kugUndKeQk2k7YUSe1C1ojZn
  matrix:
-  - nodejs_version: "4"
+  - nodejs_version: 4
+  - nodejs_version: 5
+  - nodejs_version: 6
+  - nodejs_version: 7
+  - nodejs_version: 8
 
-os: Visual Studio 2015
+image: Visual Studio 2015
 
 install:
   - ps: Install-Product node $env:nodejs_version
@@ -11,9 +17,29 @@ install:
   - git submodule update --init --recursive
 
 build_script:
-  - npm install
+  - npm install --build-from-source
 
 test_script:
   - npm test
 
-deploy: off
+artifacts:
+  - path: build\stage\gagern\node-libtidy\releases\download\**\*.tar.gz
+    name: binary
+
+before_deploy:
+  - node_modules/.bin/node-pre-gyp package
+
+deploy:
+  - provider: GitHub
+    release: $(APPVEYOR_REPO_TAG_NAME)
+    artifact: binary
+    auth_token: $(github_release_token)
+    draft: true
+    prerelease: false
+    on:
+      appveyor_repo_tag: true
+
+after_deploy:
+  - git clean -fdx
+  - npm install --fallback-to-build=false
+  - npm test
