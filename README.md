@@ -2,10 +2,11 @@
 
 This package provides bindings to
 [libtidy](http://www.html-tidy.org/developer/)
-a.k.a. [TidyLib][tidylib]
 which can be used to parse and tidy up HTML 5.
 The library is built as a native node extension,
 compiled from sources shipped with the package.
+Precompiled libraries are available for many common platforms,
+and will get installed automatically if available.
 So you don't have to have the HTML Tidy package installed on your system.
 
 ## Alternatives
@@ -216,10 +217,9 @@ using that version.
 If the version in question is not the latest release,
 then please provide some reason why that particular version would be useful.
 
-[tidylib]: http://api.html-tidy.org/tidy/tidylib_api_5.2.0/tidylib.html
-[tidyParseBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.2.0/group__Parse.html#gaa28ce34c95750f150205843885317851
-[tidyCleanAndRepair]: http://api.html-tidy.org/tidy/tidylib_api_5.2.0/group__Clean.html#ga11fd23eeb4acfaa0f9501effa0c21269
-[tidyRunDiagnostics]: http://api.html-tidy.org/tidy/tidylib_api_5.2.0/group__Clean.html#ga6170500974cc02114f6e4a29d44b7d77
-[tidySaveBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.2.0/group__Save.html#ga7e8642262c8c4d34cf7cc426647d29f0
-[quick_ref]: http://api.html-tidy.org/tidy/tidylib_api_5.2.0/quick_ref.html
-[upstream-license]: https://github.com/htacg/tidy-html5/blob/5.2.0/README/LICENSE.md
+[tidyParseBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Parse.html#gaa28ce34c95750f150205843885317851
+[tidyCleanAndRepair]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Clean.html#ga11fd23eeb4acfaa0f9501effa0c21269
+[tidyRunDiagnostics]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Clean.html#ga6170500974cc02114f6e4a29d44b7d77
+[tidySaveBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Save.html#ga7e8642262c8c4d34cf7cc426647d29f0
+[quick_ref]: http://api.html-tidy.org/tidy/quickref_5.4.0.html
+[upstream-license]: https://github.com/htacg/tidy-html5/blob/5.4.0/README/LICENSE.md
