@@ -42,8 +42,3 @@ deploy:
     prerelease: false
     on:
       appveyor_repo_tag: true
-
-after_deploy:
-  - git clean -fdx
-  - npm install --fallback-to-build=false
-  - npm test

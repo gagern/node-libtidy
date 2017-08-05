@@ -49,7 +49,3 @@ deploy:
   condition: >
    ${TRAVIS_TAG} == v*([0-9]).*([0-9]).*([0-9])
    && ${TRAVIS_NODE_VERSION} == [0-9]*
-after_deploy:
- - git clean -fdx
- - npm install --fallback-to-build=false
- - npm test

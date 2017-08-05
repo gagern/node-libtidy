@@ -1,6 +1,6 @@
 {
   "name": "libtidy",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Node bindings to the HTML Tidy library",
   "main": "src/index.js",
   "binary": {
