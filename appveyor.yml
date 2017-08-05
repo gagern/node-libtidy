@@ -2,11 +2,14 @@ environment:
  github_release_token:
   secure: TTQbwwwftUsijup2DaIPSnfBoYtXNrPVUFxNdFF/kugUndKeQk2k7YUSe1C1ojZn
  matrix:
-  - nodejs_version: 4
   - nodejs_version: 5
   - nodejs_version: 6
   - nodejs_version: 7
   - nodejs_version: 8
+
+platform:
+  - x86
+  - x64
 
 image: Visual Studio 2015
 
