@@ -21,7 +21,12 @@ addons:
 env:
  - CC=gcc-4.8 CXX=g++-4.8
 before_install:
- - if [[ ${TRAVIS_OS_NAME} == osx ]]; then export CXX=clang; fi
+ - |
+  if [[ ${TRAVIS_OS_NAME} == osx ]]; then
+   export CXX=clang
+   export CC=clang
+  fi
+ - $CC --version
  - $CXX --version
  - env
 install:
