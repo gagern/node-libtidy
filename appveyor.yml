@@ -14,7 +14,7 @@ platform:
 image: Visual Studio 2015
 
 install:
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node $env:nodejs_version $env:platform
   - npm install -g npm
   - node --version
   - npm --version
