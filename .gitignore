@@ -1,5 +1,6 @@
 /build/
 /lib/
+/src/options.d.ts
 /node_modules/
 .gdb_history
 npm-debug.log
