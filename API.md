@@ -171,7 +171,7 @@ while writing it corresponds to calling [optSet](#TidyDoc.optSet).
 
 The setter will take the assigned value and merge its elements
 into the configuration one at a time.
-Thie merging goes through [optSet](#TidyDoc.optSet),
+This merging goes through [optSet](#TidyDoc.optSet),
 so keys can use any of the allowed option naming schemes.
 
 <a id="TidyDoc.parseBuffer"></a>

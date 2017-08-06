@@ -60,6 +60,9 @@ export class TidyOption {
   toString(): string
 }
 
+type TidyOptionKey = TidyOption | string | number // object or name or id
+type TidyOptionValue = boolean | number | string | null
+
 /**
  * TidyDoc is the central object for dealing with the library at a low level
  *
@@ -67,7 +70,7 @@ export class TidyOption {
  * file at a time, while multiple such objects can deal with multiple inputs
  * simultaneously using an independent configuration for each of them.
  */
-interface TidyDoc extends Generated.TidyDocOption {
+interface TidyDoc {
   // Sync calls
   cleanAndRepairSync(): string
   parseBufferSync(document: Buffer): string
@@ -86,16 +89,14 @@ interface TidyDoc extends Generated.TidyDocOption {
   options: Generated.OptionDict
   // Methods that return TidyOption object
   getOptionList(): TidyOption[]
-  getOption(option: TidyOption): TidyOption
-  getOption(optionId: number): TidyOption
-  getOption(optionName: string): TidyOption
-  /**
-   * FIXME: does this return the list of related options??
-   */
-  optGetDocLinksList(optionId: number): TidyOption[]
-  optGetDocLinksList(optionName: string): TidyOption[]
-  /* FIXME: what does this do? */
-  optGetCurrPick(key: any): any
+  getOption(key: TidyOptionKey): TidyOption
+
+  // Working with individual options
+  optGet(key: TidyOptionKey): TidyOptionValue
+  optSet(key: TidyOptionKey, val: TidyOptionValue): void
+  optGetDoc(key: TidyOptionKey): string
+  optGetDocLinksList(key: TidyOptionKey): TidyOption[]
+  optGetCurrPick(key: TidyOptionKey): string | null
 }
 
 /**
