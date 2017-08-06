@@ -114,7 +114,7 @@ describe("TidyDoc:", function() {
 
   });
 
-  describe("basic asynchroneous operation:", function() {
+  describe("basic asynchroneous operation using callback:", function() {
 
     it("parse buffer", function(done) {
       var messages =
@@ -213,6 +213,98 @@ describe("TidyDoc:", function() {
         expect(Buffer.isBuffer(res.output)).ok;
         expect(res.output.toString()).to.match(/<title>.*<\/title>/);
         done();
+      });
+    });
+
+  });
+
+  describe("basic asynchroneous operation using promise:", function() {
+
+    it("parse buffer", function() {
+      var messages =
+          "line 2 column 7 - Warning: inserting missing 'title' element\n";
+      var doc = new TidyDoc();
+      return doc.parseBuffer(testDoc1).then(function(res) {
+        expect(res).to.not.contain.key("output");
+        expect(res).to.containSubset({
+          errlog: messages,
+        });
+        expect(doc.getErrorLog()).equal(messages);
+      });
+    });
+
+    it("clean and repair", function() {
+      // Can there be any output during clean and repair?
+      var messages = "";
+      var doc = new TidyDoc();
+      doc.parseBufferSync(testDoc1);
+      return doc.cleanAndRepair().then(function(res) {
+        expect(res).to.not.contain.key("output");
+        expect(res).to.containSubset({
+          errlog: messages,
+        });
+        expect(doc.getErrorLog()).equal(messages);
+      });
+    });
+
+    it("diagnostics", function() {
+      var messages =
+          'Info: Document content looks like HTML5\n' +
+          'Tidy found 1 warning and 0 errors!\n\n';
+      var doc = new TidyDoc();
+      doc.parseBufferSync(testDoc1);
+      doc.cleanAndRepairSync();
+      return doc.runDiagnostics().then(function(res) {
+        expect(res).to.not.contain.key("output");
+        expect(res).to.containSubset({
+          errlog: messages,
+        });
+        expect(doc.getErrorLog()).equal(messages);
+      });
+    });
+
+    it("save to buffer", function() {
+      var doc = new TidyDoc();
+      doc.parseBufferSync(testDoc1);
+      doc.cleanAndRepairSync();
+      doc.runDiagnosticsSync();
+      return doc.saveBuffer().then(function(res) {
+        expect(res).to.contain.key("output");
+        expect(res).to.containSubset({
+          errlog: "",
+        });
+        expect(Buffer.isBuffer(res.output)).ok;
+        expect(res.output.toString()).to.match(/<title>.*<\/title>/);
+        expect(doc.getErrorLog()).equal("");
+      });
+    });
+
+    it("will not produce output in case of an error", function() {
+      var doc = new TidyDoc();
+      doc.parseBufferSync(testDoc2);
+      doc.cleanAndRepairSync();
+      doc.runDiagnosticsSync();
+      var res = doc.saveBufferSync();
+      return doc.saveBuffer().then(function(res) {
+        expect(res).to.contain.key("output");
+        expect(res).to.containSubset({
+          errlog: "",
+          output: null,
+        });
+        expect(doc.getErrorLog()).equal("");
+      });
+    });
+
+    it("all in one go", function() {
+      var doc = new TidyDoc();
+      return doc.tidyBuffer(testDoc1).then(function(res) {
+        expect(res).to.contain.key("output");
+        expect(res).to.contain.key("errlog");
+        expect(res.errlog).to.match(/inserting missing/);
+        expect(res.errlog).to.match(/looks like HTML5/);
+        expect(res.errlog).to.match(/Tidy found/);
+        expect(Buffer.isBuffer(res.output)).ok;
+        expect(res.output.toString()).to.match(/<title>.*<\/title>/);
       });
     });
 

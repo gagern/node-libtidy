@@ -23,10 +23,7 @@ module.exports.tidy = function(text, opts, cb) {
   doc.options = opts; // another magic setter
   if (!Buffer.isBuffer(text))
     text = Buffer(String(text));
-  doc._async(text, true, true, true, function(err, res) {
-    if (err) {
-      return cb(err);
-    }
+  doc._async2(text, true, true, true, function(res) {
     var errlog = res.errlog;
     var output = res.output;
     if (Buffer.isBuffer(output))
@@ -34,5 +31,5 @@ module.exports.tidy = function(text, opts, cb) {
     if (!doc.optGet("show-warnings"))
       errlog = "";
     cb(errlog, output);
-  });
+  }, cb);
 };

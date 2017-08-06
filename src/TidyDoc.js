@@ -6,24 +6,32 @@ module.exports = TidyDoc;
 
 // Augment native code by some JavaScript-written convenience methods
 
+TidyDoc.prototype._async1 = function(buf, b1, b2, b3, cb) {
+  if (cb)
+    this._async2(buf, b1, b2, b3, res => cb(null, res), err => cb(err));
+  else
+    return new Promise(
+      (resolve, reject) => this._async2(buf, b1, b2, b3, resolve, reject));
+}
+
 TidyDoc.prototype.parseBuffer = function(buf, cb) {
-    this._async(buf, false, false, false, cb);
+  return this._async1(buf, false, false, false, cb);
 };
 
 TidyDoc.prototype.cleanAndRepair = function(cb) {
-    this._async(null, true, false, false, cb);
+  return this._async1(null, true, false, false, cb);
 };
 
 TidyDoc.prototype.runDiagnostics = function(cb) {
-    this._async(null, false, true, false, cb);
+  return this._async1(null, false, true, false, cb);
 };
 
 TidyDoc.prototype.saveBuffer = function(cb) {
-    this._async(null, false, false, true, cb);
+  return this._async1(null, false, false, true, cb);
 };
 
 TidyDoc.prototype.tidyBuffer = function(buf, cb) {
-  this._async(buf, true, true, true, cb);
+  return this._async1(buf, true, true, true, cb);
 };
 
 Object.defineProperties(TidyDoc.prototype, {

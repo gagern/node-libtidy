@@ -7,7 +7,7 @@ var libtidy = require("libtidy");
 ```
 
 <a id="tidyBuffer"></a>
-## tidyBuffer(input, [opts,] cb)
+## tidyBuffer(input, [opts], [cb])
 
 Asynchronous function.
 Suggested entry point for most applications.
@@ -17,7 +17,8 @@ Suggested entry point for most applications.
 * **opts** – a dictionary of [libtidy options](README.md#options).
 * **cb** – callback following the
   [callback convention](README.md#callback-convention),
-  i.e. with signature `function(exception, {output, errlog})`.
+  i.e. with signature `function(exception, {output, errlog})`
+  or omitted to return a promise.
 
 The function applies the following libtidy options by default:
 
@@ -31,13 +32,14 @@ Contruction wraps `tidyCreateWithAllocator`,
 while garbage collection triggers `tidyRelease`.
 
 <a id="TidyDoc.cleanAndRepair"></a>
-### TidyDoc.cleanAndRepair(cb)
+### TidyDoc.cleanAndRepair([cb])
 
 Asynchronous method binding `tidyCleanAndRepair`.
 
 * **cb** – callback following the
   [callback convention](README.md#callback-convention),
   i.e. with signature `function(exception, {errlog})`
+  or omitted to return a promise.
 
 <a id="TidyDoc.cleanAndRepairSync"></a>
 ### TidyDoc.cleanAndRepairSync()
@@ -175,7 +177,7 @@ This merging goes through [optSet](#TidyDoc.optSet),
 so keys can use any of the allowed option naming schemes.
 
 <a id="TidyDoc.parseBuffer"></a>
-### TidyDoc.parseBuffer(buf, cb)
+### TidyDoc.parseBuffer(buf, [cb])
 
 Asynchronous method binding `tidyParseBuffer`.
 Callback follows the [callback convention](README.md#callback-convention),
@@ -185,6 +187,7 @@ i.e. have signature `function(exception, {errlog})`
 * **cb** – callback following the
   [callback convention](README.md#callback-convention),
   i.e. with signature `function(exception, {errlog})`
+  or omitted to return a promise.
 
 It is suggested to use this method for strings as well,
 since JavaScript strings come with a length information
@@ -207,11 +210,12 @@ Make sure to leave the `input-encoding` option at its default of UTF8
 if the input is `Buffer(str)`.
 
 <a id="TidyDoc.runDiagnostics"></a>
-### TidyDoc.runDiagnostics(cb)
+### TidyDoc.runDiagnostics([cb])
 
 Asynchronous method binding `tidyRunDiagnostics`.
 Callback follows the [callback convention](README.md#callback-convention),
 i.e. have signature `function(exception, {errlog})`
+or is omitted to return a promise.
 
 <a id="TidyDoc.runDiagnosticsSync"></a>
 ### TidyDoc.runDiagnosticsSync()
@@ -220,14 +224,15 @@ Synchronous method binding `tidyRunDiagnostics`.
 Returns any diagnostics encountered during operation, as a string.
 
 <a id="TidyDoc.saveBuffer"></a>
-### TidyDoc.saveBuffer(cb)
+### TidyDoc.saveBuffer([cb])
 
 Asynchronous method binding `tidySaveBuffer`.
 
 * **cb** – callback following the
   [callback convention](README.md#callback-convention),
   i.e. with signature `function(exception, {errlog, output})`
-  where `output` is a buffer.
+  where `output` is a buffer,
+  or omitted to return a promise.
 
 <a id="TidyDoc.saveBufferSync"></a>
 ### TidyDoc.saveBufferSync()
@@ -249,7 +254,7 @@ Asynchronous method performing the four basic steps in a row:
 * **cb** – callback following the
   [callback convention](README.md#callback-convention),
   i.e. with signature `function(exception, {errlog, output})`
-  where `output` is a buffer.
+  where `output` is a buffer, or omitted to return a promise.
 
 <a id="TidyOption"></a>
 ## TidyOption()

@@ -2,7 +2,9 @@ namespace node_libtidy {
 
   class TidyWorker : public Nan::AsyncWorker {
   public:
-    TidyWorker(Doc* doc, v8::Local<v8::Function> cb);
+    TidyWorker(Doc* doc,
+               v8::Local<v8::Function> resove,
+               v8::Local<v8::Function> reject);
     void setInput(const char* data, size_t length);
     void Execute();
     void WorkComplete();
@@ -18,7 +20,8 @@ namespace node_libtidy {
     Buf output;
     int rc;
     const char* lastFunction;
-    Nan::Callback cb;
+    Nan::Callback resolve;
+    Nan::Callback reject;
   };
 
 }

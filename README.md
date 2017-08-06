@@ -46,11 +46,13 @@ deal with common workflows.
 
 ### Callback convention
 
-Most asynchroneous operations in this library take a callback with the
-conventional node signature `cb(err, res)`.
+Most asynchroneous operations in this library take an optional callback
+with the conventional node signature `cb(err, res)`.
+If no callback is provided, a promise is returned
+which either resolves to `res` or gets rejected with `err`.
 In the case of a serious error, `err` will contain an exception
 providing details about the problem.
-In less severe situations, `err` will be `null`
+In less severe situations, `err` will be `null` (in case of a callback)
 and `res` will be an object containing several properties:
 
 * **`errlog`** contains the error messages generated during the run,

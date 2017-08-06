@@ -22,7 +22,7 @@ namespace node_libtidy {
     Nan::SetPrototypeMethod(tpl, "optGetCurrPick", optGetCurrPick);
     Nan::SetPrototypeMethod(tpl, "optGetDoc", optGetDoc);
     Nan::SetPrototypeMethod(tpl, "optGetDocLinksList", optGetDocLinksList);
-    Nan::SetPrototypeMethod(tpl, "_async", async);
+    Nan::SetPrototypeMethod(tpl, "_async2", async);
     Nan::SetPrototypeMethod(tpl, "getErrorLog", getErrorLog);
 
     constructor.Reset(Nan::GetFunction(tpl).ToLocalChecked());
@@ -285,22 +285,29 @@ namespace node_libtidy {
   // 1 - boolean whether to call tidyCleanAndRepair
   // 2 - boolean whether to call tidyRunDiagnostics
   // 3 - boolean whether to save the output to a buffer
-  // 4 - callback to invoke once we are done
+  // 4 - resolve callback to invoke once we are done successfully
+  // 5 - reject callback to invoke if there was an error
   NAN_METHOD(Doc::async) {
     Doc* doc = Prelude(info.Holder()); if (!doc) return;
-    if (info.Length() != 5) {
-      Nan::ThrowTypeError("_async must be called with exactly 5 arguments.");
+    if (info.Length() != 6) {
+      Nan::ThrowTypeError("_async2 must be called with exactly 6 arguments.");
       return;
     }
     if (!(info[0]->IsNull() || node::Buffer::HasInstance(info[0]))) {
-      Nan::ThrowTypeError("First argument to _async must be a buffer");
+      Nan::ThrowTypeError("First argument to _async2 must be a buffer");
       return;
     }
     if (!info[4]->IsFunction()) {
-      Nan::ThrowTypeError("Last argument to _async must be a function");
+      Nan::ThrowTypeError("Resolve argument to _async2 must be a function");
       return;
     }
-    TidyWorker* w = new TidyWorker(doc, info[4].As<v8::Function>());
+    if (!info[5]->IsFunction()) {
+      Nan::ThrowTypeError("Reject argument to _async2 must be a function");
+      return;
+    }
+    TidyWorker* w = new TidyWorker(doc,
+                                   info[4].As<v8::Function>(),
+                                   info[5].As<v8::Function>());
     w->SaveToPersistent(0u, info.Holder());
     if (!info[0]->IsNull()) {
       w->SaveToPersistent(1u, info[0]);

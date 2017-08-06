@@ -2,8 +2,10 @@
 
 namespace node_libtidy {
 
-  TidyWorker::TidyWorker(Doc* doc, v8::Local<v8::Function> cb)
-    : Nan::AsyncWorker(NULL), doc(doc), cb(cb)
+  TidyWorker::TidyWorker(Doc* doc,
+                         v8::Local<v8::Function> resolve,
+                         v8::Local<v8::Function> reject)
+    : Nan::AsyncWorker(NULL), doc(doc), resolve(resolve), reject(reject)
   {
     doc->Lock();
     tidyBufInitWithAllocator(&input, &allocator);
@@ -36,8 +38,7 @@ namespace node_libtidy {
 
   void TidyWorker::WorkComplete() {
     doc->Unlock();
-    v8::Local<v8::Value> args[2] = { Nan::Null(), Nan::Undefined() };
-    int argc = 2;
+    v8::Local<v8::Value> args[1];
     Nan::HandleScope scope;
     {
       Nan::TryCatch tryCatch;
@@ -45,22 +46,21 @@ namespace node_libtidy {
       if (tryCatch.HasCaught()) {
         if (!tryCatch.CanContinue()) return;
         args[0] = tryCatch.Exception();
-        argc = 1;
+        reject(1, args);
+        return;
       }
     }
-    if (argc == 2) {
-      v8::Local<v8::Object> res = Nan::New<v8::Object>();
-      if (shouldSaveToBuffer) {
-        v8::Local<v8::Value> out = Nan::Null();
-        if (!output.isEmpty())
-          out = output.buffer().ToLocalChecked();
-        Nan::Set(res, Nan::New("output").ToLocalChecked(), out);
-      }
-      v8::Local<v8::Value> err = doc->err.string().ToLocalChecked();
-      Nan::Set(res, Nan::New("errlog").ToLocalChecked(), err);
-      args[1] = res;
+    v8::Local<v8::Object> res = Nan::New<v8::Object>();
+    if (shouldSaveToBuffer) {
+      v8::Local<v8::Value> out = Nan::Null();
+      if (!output.isEmpty())
+        out = output.buffer().ToLocalChecked();
+      Nan::Set(res, Nan::New("output").ToLocalChecked(), out);
     }
-    cb(argc, args);
+    v8::Local<v8::Value> err = doc->err.string().ToLocalChecked();
+    Nan::Set(res, Nan::New("errlog").ToLocalChecked(), err);
+    args[0] = res;
+    resolve(1, args);
   }
 
 }
