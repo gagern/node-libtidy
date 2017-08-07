@@ -1,0 +1,6 @@
+- id: htmltidy
+  name: HTML Tidy
+  description: Tidies HTML files
+  language: node
+  types: [html]
+  entry: htmltidy -modify --
