@@ -41,7 +41,7 @@ function readFile(name) {
   return new Promise((resolve, reject) =>
     fs.readFile(name, (err, content) => {
       if (err) reject(err);
-      else resolve({name, buf: content});
+      else resolve({name: name, buf: content});
     }));
 }
 
@@ -51,7 +51,7 @@ function readStream(stream, name) {
     const chunks = [];
     stream.once("error", reject);
     stream.on("data", chunk => chunks.append(chunk));
-    stream.on("end", resolve({name, buf: Buffer.concat(chunks)}));
+    stream.on("end", resolve({name: name, buf: Buffer.concat(chunks)}));
   });
 }
 
@@ -61,15 +61,15 @@ function readStdin() {
 
 function readBuffer(stream, buf) {
   name = name || "<buffer>";
-  return new Promise((resolve, reject) => resolve({name, buf}));
+  return new Promise((resolve, reject) => resolve({name: name, buf: buf}));
 }
 
 function tidyUp(opts) {
-  return ({name, buf}) =>
-    tidyBuffer(buf, opts).then(res => {
+  return input =>
+    tidyBuffer(input.buf, opts).then(res => {
       if (!res.output)
-        throw new TidyException(`Failed to parse ${name}`, res);
-      res.inputName = name;
+        throw new TidyException(`Failed to parse ${input.name}`, res);
+      res.inputName = input.name;
       return res;
     });
 }
