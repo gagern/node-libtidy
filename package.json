@@ -3,6 +3,9 @@
   "version": "0.3.6",
   "description": "Node bindings to the HTML Tidy library",
   "main": "src/index.js",
+  "bin": {
+    "htmltidy": "src/cli.js"
+  },
   "binary": {
     "module_name": "tidy",
     "module_path": "./lib/",

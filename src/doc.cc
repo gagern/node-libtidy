@@ -22,6 +22,7 @@ namespace node_libtidy {
     Nan::SetPrototypeMethod(tpl, "optGetCurrPick", optGetCurrPick);
     Nan::SetPrototypeMethod(tpl, "optGetDoc", optGetDoc);
     Nan::SetPrototypeMethod(tpl, "optGetDocLinksList", optGetDocLinksList);
+    Nan::SetPrototypeMethod(tpl, "optResetToDefault", optResetToDefault);
     Nan::SetPrototypeMethod(tpl, "_async2", async);
     Nan::SetPrototypeMethod(tpl, "getErrorLog", getErrorLog);
 
@@ -278,6 +279,13 @@ namespace node_libtidy {
       Nan::Set(arr, arr->Length(), obj);
     }
     info.GetReturnValue().Set(arr);
+  }
+
+  NAN_METHOD(Doc::optResetToDefault) {
+    Doc* doc = Prelude(info.Holder()); if (!doc) return;
+    TidyOption opt = doc->asOption(info[0]);
+    if (!opt) return;
+    tidyOptResetToDefault(doc->doc, tidyOptGetId(opt));
   }
 
   // arguments:
