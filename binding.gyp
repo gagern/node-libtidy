@@ -42,9 +42,6 @@
             'defines': [
                 '_REENTRANT',
                 'HAVE_CONFIG_H',
-                'SUPPORT_UTF16_ENCODINGS=1',
-                'SUPPORT_ASIAN_ENCODINGS=1',
-                'SUPPORT_ACCESSIBILITY_CHECKS=1',
                 'LIBTIDY_VERSION="<!(node parse-version.js version)"',
                 'RELEASE_DATE="<!(node parse-version.js date)"',
                 'BUILD_SHARED_LIB',
