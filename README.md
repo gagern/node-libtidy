@@ -86,12 +86,12 @@ each of them.
 
 The basic workflow consists of these four steps executed on such an object:
 
-Step | C API | Synchroneous JavaScript | Asynchroneous JavaScript
---- | --- | --- | ---
-1. | [`tidyParseBuffer(doc,&buf)`][tidyParseBuffer] | `doc.parseBufferSync(buf)` | `doc.parseBuffer(buf,cb)`
-2. | [`tidyCleanAndRepair(doc)`][tidyCleanAndRepair] | `doc.cleanAndRepairSync()` | `doc.cleanAndRepair(cb)`
-3. | [`tidyRunDiagnostics(doc)`][tidyRunDiagnostics] | `doc.runDiagnosticsSync()` | `doc.runDiagnostics(cb)`
-4. | [`tidySaveBuffer(doc,&buf)`][tidySaveBuffer] | `doc.saveBufferSync()` | `doc.saveBuffer(cb)`
+| Step | C API | Synchroneous JavaScript | Asynchroneous JavaScript |
+| --- | --- | --- | --- |
+| 1. | [`tidyParseBuffer(doc,&buf)`][tidyParseBuffer] | `doc.parseBufferSync(buf)` | `doc.parseBuffer(buf,cb)` |
+| 2. | [`tidyCleanAndRepair(doc)`][tidyCleanAndRepair] | `doc.cleanAndRepairSync()` | `doc.cleanAndRepair(cb)` |
+| 3. | [`tidyRunDiagnostics(doc)`][tidyRunDiagnostics] | `doc.runDiagnosticsSync()` | `doc.runDiagnostics(cb)` |
+| 4. | [`tidySaveBuffer(doc,&buf)`][tidySaveBuffer] | `doc.saveBufferSync()` | `doc.saveBuffer(cb)` |
 
 Most synchroneous functions take no argument
 and return any diagnostic messages generated in the process.
