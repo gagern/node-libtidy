@@ -148,9 +148,9 @@ The following lists the full public interface of the package.
 Details on each item can be found in the
 [API documentation](https://github.com/gagern/node-libtidy/blob/master/API.md).
 
-- **tidyBuffer(input, cb)** – async function
+- **tidyBuffer(input, [opts], [cb])** – async function
 - **TidyDoc()** – constructor
-  - **cleanAndRepair(cb)** – async method
+  - **cleanAndRepair([cb])** – async method
   - **cleanAndRepairSync()** – method
   - **getOption(key)** – method
   - **getOptionList()** – method
@@ -160,13 +160,13 @@ Details on each item can be found in the
   - **optGetDocLinksList(key)** – method
   - **optSet(key, value)** – method
   - **options** – getter and setter
-  - **parseBuffer(buf, cb)** – async method
+  - **parseBuffer(buf, [cb])** – async method
   - **parseBufferSync(buf)** – method
-  - **runDiagnostics(cb)** – async method
+  - **runDiagnostics([cb])** – async method
   - **runDiagnosticsSync()** – method
-  - **saveBuffer(cb)** – async method
+  - **saveBuffer([cb])** – async method
   - **saveBufferSync()** – method
-  - **tidyBuffer(buf, cb)** – async method
+  - **tidyBuffer(buf, [cb])** – async method
 - **TidyOption()** – constructor (not for public use)
   - **category** – getter
   - **default** – getter
@@ -177,8 +177,8 @@ Details on each item can be found in the
   - **toString()** – method
   - **type** – getter
 - **compat** – namespace
-  - **libtidy** – namespace
-    - **tidy** – async function
+  - **htmltidy** – namespace
+    - **tidy(input, [opts], cb)** – async function
 
 ## TypeScript support
 
@@ -209,6 +209,7 @@ If you want to update to the latest version of libtidy, you can execute
 cd tidy-html5
 git checkout master
 echo "Bump libtidy to `git describe --tags`" | tee ../commit_message.tmp
+cd ..
 git add tidy-html5
 npm install
 npm test

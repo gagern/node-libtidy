@@ -60,7 +60,7 @@ Retrieve the [TidyOption](#TidyOption) object for the key in question.
 Wraps `tidyGetOptionByName` and `tidyGetOption`.
 
 <a id="TidyDoc.getOptionList"></a>
-### TidyDoc.getOptionList() – method
+### TidyDoc.getOptionList()
 
 Retrieve the list of all known options,
 as an array of [TidyOption](#TidyOption) objects.
@@ -68,7 +68,7 @@ as an array of [TidyOption](#TidyOption) objects.
 Wraps `tidyGetOptionList` and `tidyGetNextOption`.
 
 <a id="TidyDoc.optGet"></a>
-### TidyDoc.optGet(key) – method
+### TidyDoc.optGet(key)
 
 Get the current value of the option in question.
 
@@ -86,7 +86,7 @@ Empty strings will be returned as `null` like libtidy does.
   or a [TidyOption](#TidyOption) object.
 
 <a id="TidyDoc.optGetCurrPick"></a>
-### TidyDoc.optGetCurrPick(key) – method
+### TidyDoc.optGetCurrPick(key)
 
 Get a string representation of the current value for a given option.
 The option must have a [pick list](#TidyOption.pickList) associated.
@@ -103,7 +103,7 @@ For most applications, [optGet](#TidyDoc.optGet) should be more suitable.
 Wraps `tidyOptGetCurrPick`.
 
 <a id="TidyDoc.optGetDoc"></a>
-### TidyDoc.optGetDoc(key) – method
+### TidyDoc.optGetDoc(key)
 
 Describe the named option.
 The description is a HTML snippet, returned as a string.
@@ -116,7 +116,7 @@ The description is a HTML snippet, returned as a string.
 Wraps `tidyOptGetDoc`.
 
 <a id="TidyDoc.optGetDocLinksList"></a>
-### TidyDoc.optGetDocLinksList(key) – method
+### TidyDoc.optGetDocLinksList(key)
 
 Identify related options.
 The result is a (possibly empty) array of [TidyOption](#TidyOption) objects.
@@ -129,7 +129,7 @@ The result is a (possibly empty) array of [TidyOption](#TidyOption) objects.
 Wraps `tidyOptGetDocLinksList` and `tidyOptGetNextDocLinks`.
 
 <a id="TidyDoc.optSet"></a>
-### TidyDoc.optSet(key, value) – method
+### TidyDoc.optSet(key, value)
 
 Set the value for the option in question.
 
@@ -241,7 +241,7 @@ Synchronous method binding `tidySaveBuffer`.
 Returns the resulting buffer as a string.
 
 <a id="TidyDoc.tidyBuffer"></a>
-### TidyDoc.tidyBuffer(buf, cb)
+### TidyDoc.tidyBuffer(buf, [cb])
 
 Asynchronous method performing the four basic steps in a row:
 
@@ -364,7 +364,7 @@ This offers a drop-in replacement for
 
 <a id="compat.htmltidy.tidy"></a>
 <a id="tidy"></a>
-## compat.htmltidy.tidy(input, [opts,] cb)
+## compat.htmltidy.tidy(input, [opts], cb)
 
 Asynchronous function.
 
