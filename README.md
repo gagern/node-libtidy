@@ -148,37 +148,69 @@ The following lists the full public interface of the package.
 Details on each item can be found in the
 [API documentation](https://github.com/gagern/node-libtidy/blob/master/API.md).
 
-- **tidyBuffer(input, [opts], [cb])** – async function
-- **TidyDoc()** – constructor
-  - **cleanAndRepair([cb])** – async method
-  - **cleanAndRepairSync()** – method
-  - **getOption(key)** – method
-  - **getOptionList()** – method
-  - **optGet(key)** – method
-  - **optGetCurrPick(key)** – method
-  - **optGetDoc(key)** – method
-  - **optGetDocLinksList(key)** – method
-  - **optSet(key, value)** – method
-  - **options** – getter and setter
-  - **parseBuffer(buf, [cb])** – async method
-  - **parseBufferSync(buf)** – method
-  - **runDiagnostics([cb])** – async method
-  - **runDiagnosticsSync()** – method
-  - **saveBuffer([cb])** – async method
-  - **saveBufferSync()** – method
-  - **tidyBuffer(buf, [cb])** – async method
-- **TidyOption()** – constructor (not for public use)
-  - **category** – getter
-  - **default** – getter
-  - **id** – getter
-  - **name** – getter
-  - **pickList** – getter
-  - **readOnly** – getter
-  - **toString()** – method
-  - **type** – getter
-- **compat** – namespace
-  - **htmltidy** – namespace
-    - **tidy(input, [opts], cb)** – async function
+- [**tidyBuffer(input, [opts], [cb])**][APItidyBuffer] – async function
+- [**TidyDoc()**][APITidyDoc] – constructor
+  - [**cleanAndRepair([cb])**][APIcleanAndRepair] – async method
+  - [**cleanAndRepairSync()**][APIcleanAndRepairSync] – method
+  - [**getOption(key)**][APIgetOption] – method
+  - [**getOptionList()**][APIgetOptionList] – method
+  - [**optGet(key)**][APIoptGet] – method
+  - [**optGetCurrPick(key)**][APIoptGetCurrPick] – method
+  - [**optGetDoc(key)**][APIoptGetDoc] – method
+  - [**optGetDocLinksList(key)**][APIoptGetDocLinksList] – method
+  - [**optSet(key, value)**][APIoptSet] – method
+  - [**options**][APIoptions] – getter and setter
+  - [**parseBuffer(buf, [cb])**][APIparseBuffer] – async method
+  - [**parseBufferSync(buf)**][APIparseBufferSync] – method
+  - [**runDiagnostics([cb])**][APIrunDiagnostics] – async method
+  - [**runDiagnosticsSync()**][APIrunDiagnosticsSync] – method
+  - [**saveBuffer([cb])**][APIsaveBuffer] – async method
+  - [**saveBufferSync()**][APIsaveBufferSync] – method
+  - [**tidyBuffer(buf, [cb])**][APItidyBuffer] – async method
+- [**TidyOption()**][APITidyOption] – constructor (not for public use)
+  - [**category**][APIcategory] – getter
+  - [**default**][APIdefault] – getter
+  - [**id**][APIid] – getter
+  - [**name**][APIname] – getter
+  - [**pickList**][APIpickList] – getter
+  - [**readOnly**][APIreadOnly] – getter
+  - [**toString()**][APItoString] – method
+  - [**type**][APItype] – getter
+- [**compat**][APIcompat] – namespace
+  - [**htmltidy**][APIhtmltidy] – namespace
+    - [**tidy(input, [opts], cb)**][APItidy] – async function
+
+[APItidyBuffer]: https://github.com/gagern/node-libtidy/blob/master/API.md#tidyBuffer
+[APITidyDoc]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc
+[APIcleanAndRepair]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.cleanAndRepair
+[APIcleanAndRepairSync]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.cleanAndRepairSync
+[APIgetOption]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.getOption
+[APIgetOptionList]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.getOptionList
+[APIoptGet]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.optGet
+[APIoptGetCurrPick]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.optGetCurrPick
+[APIoptGetDoc]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.optGetDoc
+[APIoptGetDocLinksList]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.optGetDocLinksList
+[APIoptSet]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.optSet
+[APIoptions]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.options
+[APIparseBuffer]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.parseBuffer
+[APIparseBufferSync]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.parseBufferSync
+[APIrunDiagnostics]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.runDiagnostics
+[APIrunDiagnosticsSync]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.runDiagnosticsSync
+[APIsaveBuffer]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.saveBuffer
+[APIsaveBufferSync]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.saveBufferSync
+[APItidyBuffer]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyDoc.tidyBuffer
+[APITidyOption]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption
+[APIcategory]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.category
+[APIdefault]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.default
+[APIid]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.id
+[APIname]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.name
+[APIpickList]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.pickList
+[APIreadOnly]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.readOnly
+[APItoString]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.toString
+[APItype]: https://github.com/gagern/node-libtidy/blob/master/API.md#TidyOption.type
+[APIcompat]: https://github.com/gagern/node-libtidy/blob/master/API.md#compat
+[APIhtmltidy]: https://github.com/gagern/node-libtidy/blob/master/API.md#htmltidy
+[APItidy]: https://github.com/gagern/node-libtidy/blob/master/API.md#compat.htmltidy.tidy
 
 ## TypeScript support
 
