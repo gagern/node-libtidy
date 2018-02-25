@@ -21,9 +21,7 @@
                 'tidy-html5/src/message.c',
                 'tidy-html5/src/config.c',
                 'tidy-html5/src/alloc.c',
-                'tidy-html5/src/attrask.c',
                 'tidy-html5/src/attrdict.c',
-                'tidy-html5/src/attrget.c',
                 'tidy-html5/src/buffio.c',
                 'tidy-html5/src/fileio.c',
                 'tidy-html5/src/streamio.c',
@@ -34,6 +32,8 @@
                 'tidy-html5/src/mappedio.c',
                 'tidy-html5/src/gdoc.c',
                 'tidy-html5/src/language.c',
+                'tidy-html5/src/messageobj.c',
+                'tidy-html5/src/sprtf.c'
             ],
             'include_dirs': [
                 'tidy-html5/include',
@@ -71,9 +71,6 @@
             },
             'conditions': [
                 ['OS=="win"', {
-                    'sources': [
-                        'tidy-html5/src/sprtf.c',
-                    ],
                     'defines': [
                         'NOMINMAX',
                         '_USE_MATH_DEFINES',
