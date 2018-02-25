@@ -258,9 +258,9 @@ using that version.
 If the version in question is not the latest release,
 then please provide some reason why that particular version would be useful.
 
-[tidyParseBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Parse.html#gaa28ce34c95750f150205843885317851
-[tidyCleanAndRepair]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Clean.html#ga11fd23eeb4acfaa0f9501effa0c21269
-[tidyRunDiagnostics]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Clean.html#ga6170500974cc02114f6e4a29d44b7d77
-[tidySaveBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.4.0/group__Save.html#ga7e8642262c8c4d34cf7cc426647d29f0
-[quick_ref]: http://api.html-tidy.org/tidy/quickref_5.4.0.html
-[upstream-license]: https://github.com/htacg/tidy-html5/blob/5.4.0/README/LICENSE.md
+[tidyParseBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.6.0/group__Parse.html#gaa28ce34c95750f150205843885317851
+[tidyCleanAndRepair]: http://api.html-tidy.org/tidy/tidylib_api_5.6.0/group__Clean.html#ga11fd23eeb4acfaa0f9501effa0c21269
+[tidyRunDiagnostics]: http://api.html-tidy.org/tidy/tidylib_api_5.6.0/group__Clean.html#ga6170500974cc02114f6e4a29d44b7d77
+[tidySaveBuffer]: http://api.html-tidy.org/tidy/tidylib_api_5.6.0/group__Save.html#ga7e8642262c8c4d34cf7cc426647d29f0
+[quick_ref]: http://api.html-tidy.org/tidy/quickref_5.6.0.html
+[upstream-license]: https://github.com/htacg/tidy-html5/blob/5.6.0/README/LICENSE.md
