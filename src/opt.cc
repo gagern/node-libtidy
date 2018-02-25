@@ -78,20 +78,41 @@ namespace node_libtidy {
       TidyOption opt = Unwrap(info.Holder()); if (!opt) return;
       const char* res;
       switch (tidyOptGetCategory(opt)) {
-      case TidyMarkup:
-        res = "Markup";
-        break;
       case TidyDiagnostics:
         res = "Diagnostics";
         break;
-      case TidyPrettyPrint:
-        res = "PrettyPrint";
+      case TidyDisplay:
+        res = "Display";
+        break;
+      case TidyDocumentIO:
+        res = "DocumentIO";
         break;
       case TidyEncoding:
         res = "Encoding";
         break;
-      case TidyMiscellaneous:
-        res = "Miscellaneous";
+      case TidyFileIO:
+        res = "FileIO";
+        break;
+      case TidyMarkupCleanup:
+        res = "MarkupCleanup";
+        break;
+      case TidyMarkupEntities:
+        res = "MarkupEntities";
+        break;
+      case TidyMarkupRepair:
+        res = "MarkupRepair";
+        break;
+      case TidyMarkupTeach:
+        res = "MarkupTeach";
+        break;
+      case TidyMarkupXForm:
+        res = "MarkupXForm";
+        break;
+      case TidyPrettyPrint:
+        res = "PrettyPrint";
+        break;
+      case TidyInternalCategory:
+        res = "InternalCategory";
         break;
       default:
         Nan::ThrowError("Unknown option category");
