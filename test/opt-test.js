@@ -75,7 +75,7 @@ describe("TidyOption:", function() {
     it("can handle boolean options", function() {
       var doc = TidyDoc();
       expect(doc.optGet("add-xml-decl")).to.be.false;
-      expect(doc.optSet("add-xml-decl", "this starts with T")).to.be.undefined;
+      expect(doc.optSet("add-xml-decl", true)).to.be.undefined;
       expect(doc.optGet("add-xml-decl")).to.be.true;
       expect(doc.optSet("add-xml-decl", false)).to.be.undefined;
       expect(doc.optGet("add-xml-decl")).to.be.false;
