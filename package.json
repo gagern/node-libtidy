@@ -58,7 +58,7 @@
     "typescript": "^2.2.2"
   },
   "dependencies": {
-    "nan": "^2.1.0",
+    "nan": "^2.11.0",
     "node-pre-gyp": "^0.11.0"
   },
   "bundledDependencies": [
