@@ -18,7 +18,7 @@
     "install": "node-pre-gyp install --fallback-to-build",
     "prepublish": "node util/gen-typescript-decl.js",
     "pretest": "node util/gen-typescript-decl.js",
-    "test": "mocha --compilers ts:ts-node/register"
+    "test": "mocha --require ts-node/register"
   },
   "repository": {
     "type": "git",
