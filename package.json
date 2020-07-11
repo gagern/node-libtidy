@@ -18,7 +18,7 @@
     "install": "node-pre-gyp install --fallback-to-build",
     "prepublish": "node util/gen-typescript-decl.js",
     "pretest": "node util/gen-typescript-decl.js",
-    "test": "mocha --compilers ts:ts-node/register"
+    "test": "mocha --require ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -47,19 +47,19 @@
   },
   "homepage": "https://github.com/gagern/node-libtidy#readme",
   "devDependencies": {
-    "@types/chai": "^3.4.1",
-    "@types/mocha": "^2.2.40",
-    "@types/node": "^7.0.12",
-    "chai": "^3.4.1",
-    "chai-subset": "^1.2.0",
-    "htmltidy2": "^0.1.4",
-    "mocha": "^3.1.2",
-    "ts-node": "^3.0.2",
-    "typescript": "^2.2.2"
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.0.22",
+    "chai": "^4.2.0",
+    "chai-subset": "^1.6.0",
+    "htmltidy2": "^0.3.0",
+    "mocha": "^8.0.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.6"
   },
   "dependencies": {
-    "nan": "^2.1.0",
-    "node-pre-gyp": "^0.6.36"
+    "nan": "^2.14.1",
+    "node-pre-gyp": "^0.15.0"
   },
   "bundledDependencies": [
     "node-pre-gyp"
